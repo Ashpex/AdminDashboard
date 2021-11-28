@@ -7,7 +7,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="/css/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/css/my_style.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -40,62 +41,45 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Quản lý</div>
-                            <a class="nav-link" href="/">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Giao diện</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Bố cục
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="/layout-static">Điều hướng tĩnh</a>
-                                    <a class="nav-link" href="/layout-sidenav-light">Điều hướng động</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                Trang
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Xác thực
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="/login">Đăng nhập</a>
-                                            <a class="nav-link" href="/register">Đăng ký</a>
-                                            <a class="nav-link" href="/password">Quên mật khẩu</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        Lỗi
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="/401">Trang 401</a>
-                                            <a class="nav-link" href="/404">Trang 404 </a>
-                                            <a class="nav-link" href="/500">Trang 500 </a>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
-                            <div class="sb-sidenav-menu-heading">Tiện ích</div>
-                            <a class="nav-link" href="/charts">
+                            <div class="sb-sidenav-menu-heading">Tài khoản</div>
+
+                            <a class="nav-link" href="/account/list-account">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Biểu đồ
+                                Xem danh sách
                             </a>
-                            <a class="nav-link" href="/tables">
+                            <a class="nav-link" href="/account/add-account">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Bảng
+                                Thêm tài khoản
+                            </a>
+                          
+                            <div class="sb-sidenav-menu-heading">Sản phẩm</div>
+                            <a class="nav-link" href="/product/list-product">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Xem danh sách
+                            </a>
+                            <a class="nav-link" href="/product/add-product">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Thêm sản phẩm
+                            </a>                          
+
+                            <div class="sb-sidenav-menu-heading">Thương hiệu</div>
+                            <a class="nav-link" href="/category/list-category">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Xem danh sách
+                            </a>
+                            <a class="nav-link" href="/list_account">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Thêm thương hiệu
+                            </a>
+
+                            <div class="sb-sidenav-menu-heading">Danh mục</div>
+                            <a class="nav-link" href="/tables">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Xem danh sách
+                            </a>
+                            <a class="nav-link" href="/list_account">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Thêm danh mục
                             </a>
                         </div>
                     </div>
@@ -124,11 +108,12 @@
         </div>
         
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/chart-area-demo.js"></script>
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="/js/datatables-simple-demo.js"></script>
+        
     </body>
 </html>

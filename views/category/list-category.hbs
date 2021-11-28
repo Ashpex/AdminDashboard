@@ -1,0 +1,94 @@
+<table id="listCategory">
+  <thead>
+    <tr>
+      <th>Tên thương hiệu</th>
+      <th>Danh sách sản phẩm</th>
+      <th>Điều chỉnh</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each categories}}
+      <tr>
+        <td><h6>{{this.name}}</h6></td>
+        <td class="list-product"></td>
+        <td>
+            <a href="/category/edit-category/{{_id}}">
+            <i class="far fa-edit" style="font-size: 20px;"></i>
+          </a>
+         
+          <a
+            href="/category/delete-category/{{_id}}"
+            onclick="return confirm('Bạn có muốn xóa danh mục không')"
+          >
+            <i class="fas fa-trash" style="margin-left: 20px;color: red; font-size: 20px" ></i>
+          </a>
+
+      </tr>
+    {{/each}}
+
+    {{#each products}}   
+      <div>
+
+      
+        <div class="product" style="display: flex;">
+          
+            <img src="{{this.image}}" alt="" width="100px" height="100px" style="margin-bottom: 5px; margin-right: 25px;">
+            <div>
+                <h6>{{this.name}}</h6>
+                <h6>Giá: {{this.price}}</h6>
+            </div>
+                     
+        </div> 
+        
+        <div>
+              <a
+              href="/category/delete-product/{{_id}}"
+              onclick="return confirm('Bạn có muốn xóa sản phẩm khỏi danh mục này không')">
+            
+                <i class="fas fa-trash" style="margin-left: 20px;color: red; font-size: 20px;" ></i>
+              </a>
+            </div>
+
+          </div>
+           
+    {{/each}}
+
+    <!-- <td >
+          {{#ifCond this.status '==' 'true'}}
+            <i class="fas fa-check" style="color: green"></i>
+          {{else}}
+            <i class="fas fa-ban" style="color: red" ></i>
+          {{/ifCond}}
+        </td>
+        <td >
+          <a href="/account/edit-account/{{_id}}">
+            <i class="far fa-edit"></i>
+          </a>
+
+          {{#ifCond this.status '==' 'true'}}          
+          <a
+            href="/account/block-account/{{_id}}"
+            onclick="return confirm('Bạn có muốn khóa tài khoản không')"
+          >
+            <i class="fas fa-ban" style="margin-left: 20px;color: red" ></i>
+          </a>
+          {{else}}
+          <a
+            href="/account/unblock-account/{{_id}}"
+            onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
+          >
+            <i class="fas fa-check" style="margin-left: 20px;color: green" ></i>
+          </a>
+          {{/ifCond}} -->
+
+  </tbody>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+      $(".list-product").append($(".product"));
+  });
+  
+</script>

@@ -1,0 +1,45 @@
+<table id="listProduct">
+  <thead>
+    <tr>
+      <th>Tên sản phẩm</th>
+      <th>Chi tiết</th>
+      <th>Chất lượng</th>
+      <th>Giá</th>
+      <th>Ảnh</th>
+      <th>Danh mục</th>
+      <th>Điều chỉnh</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each product}}
+      <tr>
+        <td>{{this.name}}</td>
+        <td>{{this.details}}</td>
+        <td>{{this.quanlity}}</td>
+        <td>{{this.price}}</td>
+        <td>
+          <a href="{{this.image}}" target="_blank">
+            <img src="{{this.image}}" alt="{{this.name}}" width="100" height="100">
+          </a>
+        </td>
+        <td>{{this.category}}</td>
+        <td>
+          <div class="center">
+            <a href="/product/edit-product/{{_id}}">
+              <i class="far fa-edit"></i>
+            </a>
+
+            <a
+              href="/product/delete-product/{{_id}}"
+              onclick="return confirm('Bạn có muốn xóa không')"
+            >
+              <i class="fas fa-trash" style="margin-left: 30px; color: red"></i>
+            </a>
+          </div>
+
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

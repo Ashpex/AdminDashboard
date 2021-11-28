@@ -1,0 +1,53 @@
+<table id="listAccount">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Mật khẩu</th>
+      <th>Họ tên</th>
+      <th>Địa chỉ</th>
+      <th>Trạng thái</th>
+      <th>Điều chỉnh</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {{#each account}}
+      <tr>
+        <td>{{this.email}}</td>
+        <td>{{this.password}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.address}}</td>
+
+        <td >
+          {{#ifCond this.status '==' 'true'}}
+            <i class="fas fa-check" style="color: green"></i>
+          {{else}}
+            <i class="fas fa-ban" style="color: red" ></i>
+          {{/ifCond}}
+        </td>
+        <td >
+          <a href="/account/edit-account/{{_id}}">
+            <i class="far fa-edit"></i>
+          </a>
+
+          {{#ifCond this.status '==' 'true'}}          
+          <a
+            href="/account/block-account/{{_id}}"
+            onclick="return confirm('Bạn có muốn khóa tài khoản không')"
+          >
+            <i class="fas fa-ban" style="margin-left: 20px;color: red" ></i>
+          </a>
+          {{else}}
+          <a
+            href="/account/unblock-account/{{_id}}"
+            onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
+          >
+            <i class="fas fa-check" style="margin-left: 20px;color: green" ></i>
+          </a>
+          {{/ifCond}}
+
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
