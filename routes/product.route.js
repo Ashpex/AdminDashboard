@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
-const Product = require("../Models/product.model");
-const Category = require("../Models/category.model");
+const Product = require("../models/product.model");
+const Category = require("../models/category.model");
+const convertViToEn = require("../utils/convertViToEn");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -52,7 +53,7 @@ router.get("/add-product", (req, res) => {
 
 //add product post and add product id to category
 router.post("/add-product", (req, res) => {
-  upload(req, res, (err) => {
+  upload(req, res, async (err) => {
     if (err) {
       console.log(err);
       Category.find({}, (err, category) => {
@@ -72,13 +73,23 @@ router.post("/add-product", (req, res) => {
           });
         });
       } else {
+        //idProduct + listImgExtra
+        const category = await Category.findById(req.body.id_category);
+        const random = await Math.floor(Math.random() * (1000 - 0 + 1) + 0);
+        const idProduct =
+          (await convertViToEn.convertViToEn(req.body.name)) + "-" + random;
+
         const product = new Product({
           name: req.body.name,
           price: req.body.price,
           image: req.body.urlImage,
           details: req.body.details,
-          category: req.body.category,
+          category: category.name,
+          quantity: req.body.quantity,
+          idProduct: idProduct,
         });
+        //res.send(product);
+        //res.send(product);
 
         product.save((err) => {
           if (err) {
@@ -135,11 +146,13 @@ router.post("/edit-product", (req, res) => {
   // });
 
   Category.find({}, (err, category) => {
-    if (err) return next(err);
-    res.render("product/add-product", {
-      category,
-      msg: err,
-    });
+    if (err) {
+      return next(err);
+      // res.render("product/add-product", {
+      //   category,
+      //   msg: err,
+      // });
+    }
   });
 
   // find product and update
@@ -151,6 +164,7 @@ router.post("/edit-product", (req, res) => {
         price: req.body.price,
         category: req.body.category,
         details: req.body.details,
+        quantity: req.body.quantity,
       },
     },
     (err, product) => {

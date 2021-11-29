@@ -85,9 +85,9 @@ app.get("/", function (req, res) {
   res.render("home");
 });
 
-const User = require("./Models/user.model");
-const Product = require("./Models/product.model");
-const Category = require("./Models/category.model");
+const User = require("./models/user.model");
+const Product = require("./models/product.model");
+const Category = require("./models/category.model");
 
 app.use("/account", require("./routes/account.route"));
 app.use("/product", require("./routes/product.route"));

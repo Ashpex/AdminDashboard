@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const Category = require("../Models/category.model");
-const Product = require("../Models/product.model");
+const Category = require("../models/category.model");
+const Product = require("../models/product.model");
 
 // // show list category
 // router.get("/list-category", async (req, res) => {

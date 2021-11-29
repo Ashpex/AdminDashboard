@@ -7,11 +7,12 @@ const ProductSchema = new Schema(
   {
     name: String,
     details: String,
-    quanlity: String,
+    quantity: Number,
     price: Number,
     image: String,
     category: String,
     listIdRating: [{ type: Schema.Types.ObjectId }],
+    idProduct: String,
   },
   { collection: "product" }
 );

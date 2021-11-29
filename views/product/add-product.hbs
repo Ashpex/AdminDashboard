@@ -34,6 +34,11 @@
                   <input name="price" type="number" id="form3Example4cg" class="form-control form-control-lg" />
                 </div>
 
+                <div class="form-outline mb-2">
+                  <label class="form-label" for="form3Example4cg">Số Lượng</label>
+                  <input name="quantity" type="number" id="idQuantity" class="form-control form-control-lg" />
+                </div>
+
                 <div class="form-outline mb-4">
                   <label class="form-label" for="fileImageProduct">Ảnh</label>
                   <input name="image" type="file" id="fileImageProduct" class="form-control form-control-lg"/>
@@ -47,7 +52,7 @@
                     class="form-control form-control-lg"
                   >
                     {{#each category}}
-                      <option value="{{this._id}}">{{this.name}}</option>
+                      <option  value="{{this._id}}">{{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>
