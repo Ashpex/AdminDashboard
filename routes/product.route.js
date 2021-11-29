@@ -137,7 +137,7 @@ router.get("/edit-product/:id", (req, res) => {
 });
 
 // edit product post
-router.post("/edit-product", (req, res) => {
+router.post("/edit-product", async (req, res) => {
   // find category and add product to category
   // Category.Cha.findByIdAndUpdate(req.body.id_category, (err, category) => {
   //   if (err) return next(err);
@@ -155,6 +155,24 @@ router.post("/edit-product", (req, res) => {
     }
   });
 
+  const productEdit = await Product.findById(req.body.id);
+  //res.send(productEdit);
+  const categoryRemove = await Category.findOne({ name: productEdit.category });
+  await categoryRemove.listIdProduct.remove(productEdit.id);
+  await Category.findByIdAndUpdate(categoryRemove.id, {
+    $set: {
+      listIdProduct: categoryRemove.listIdProduct,
+    },
+  });
+
+  const categoryAdd = await Category.findById(req.body.id_category);
+  await categoryAdd.listIdProduct.push(productEdit.id);
+  await Category.findByIdAndUpdate(categoryAdd.id, {
+    $set: {
+      listIdProduct: categoryAdd.listIdProduct,
+    },
+  });
+
   // find product and update
   Product.findByIdAndUpdate(
     req.body.id,
@@ -162,7 +180,7 @@ router.post("/edit-product", (req, res) => {
       $set: {
         name: req.body.name,
         price: req.body.price,
-        category: req.body.category,
+        category: categoryAdd.name,
         details: req.body.details,
         quantity: req.body.quantity,
       },
@@ -175,7 +193,18 @@ router.post("/edit-product", (req, res) => {
 });
 
 // delete product
-router.get("/delete-product/:id", (req, res) => {
+router.get("/delete-product/:id", async (req, res) => {
+  const productDel = await Product.findById(req.params.id);
+
+  const category = await Category.findOne({ name: productDel.category });
+  await category.listIdProduct.remove(productDel.id);
+
+  await Category.findByIdAndUpdate(category.id, {
+    $set: {
+      listIdProduct: category.listIdProduct,
+    },
+  });
+
   Product.findByIdAndDelete(req.params.id, (err, product) => {
     if (err) return next(err);
     res.redirect("/product/list-product");
