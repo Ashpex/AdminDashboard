@@ -3,6 +3,8 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const bodyParser = require("body-parser");
 const Handlebars = require("handlebars");
+const methodOverride = require("method-override");
+
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
@@ -54,6 +56,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
+app.use(methodOverride("_method"));
 //multer
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

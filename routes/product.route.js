@@ -75,9 +75,9 @@ router.post("/add-product", (req, res) => {
       } else {
         //idProduct + listImgExtra
         const category = await Category.findById(req.body.id_category);
-        const random = await Math.floor(Math.random() * (1000 - 0 + 1) + 0);
-        const idProduct =
-          (await convertViToEn.convertViToEn(req.body.name)) + "-" + random;
+        // const random = await Math.floor(Math.random() * (1000 - 0 + 1) + 0);
+        // const idProduct =
+        //   (await convertViToEn.convertViToEn(req.body.name)) + "-" + random;
 
         const product = new Product({
           name: req.body.name,
@@ -86,7 +86,6 @@ router.post("/add-product", (req, res) => {
           details: req.body.details,
           category: category.name,
           quantity: req.body.quantity,
-          idProduct: idProduct,
         });
         //res.send(product);
         //res.send(product);
