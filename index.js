@@ -3,12 +3,10 @@ const exphbs = require("express-handlebars");
 const path = require("path");
 const bodyParser = require("body-parser");
 const Handlebars = require("handlebars");
-const methodOverride = require("method-override");
-
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
-const multer = require("multer");
+const env = require("dotenv").config();
 
 var app = express();
 
@@ -56,45 +54,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-app.use(methodOverride("_method"));
-//multer
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public/upload");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    console.log(file);
-    if (
-      file.mimetype == "image/bmp" ||
-      file.mimetype == "image/png" ||
-      file.mimetype == "image/jpeg" ||
-      file.mimetype == "image/jpg" ||
-      file.mimetype == "image/gif"
-    ) {
-      cb(null, true);
-    } else {
-      return cb(new Error("Only image are allowed!"));
-    }
-  },
-}).single("image");
-
 app.get("/", function (req, res) {
   res.render("home");
 });
 
-const User = require("./models/user.model");
-const Product = require("./models/product.model");
-const Category = require("./models/category.model");
-
 app.use("/account", require("./routes/account.route"));
 app.use("/product", require("./routes/product.route"));
 app.use("/category", require("./routes/category.route"));
+app.use("/producer", require("./routes/producer.route"));
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("App listening on port 3000");

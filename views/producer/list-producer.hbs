@@ -1,34 +1,34 @@
-<table id="listCategory">
+<table id="listProducer">
   <thead>
     <tr>
-      <th>Tên danh mục</th>
+      <th>Tên thương hiệu</th>
       <th>Danh sách sản phẩm</th>
       <th>Điều chỉnh</th>
     </tr>
   </thead>
 
   <tbody>
-    {{#each categories}}
+    {{#each producers}}
       <tr>
         <td><h6>{{this.name}}</h6></td>
-        <td class="list-product{{@index}}"></td>
+        <td class="list-producer{{@index}}"></td>
         <td>
           <div class="row">
             <div class="col-4">
-              <a href="/category/edit-category/{{_id}}">
+              <a href="/producer/edit-producer/{{_id}}">
                 <i class="far fa-edit" style="font-size: 20px;"
-                title="Chỉnh sửa danh mục"></i>
+                title="Chỉnh sửa thương hiệu"></i>
               </a>
 
             </div>
 
             <div class="col-4">
               <a
-              href="/category/delete-category/{{_id}}"
-              onclick="return confirm('Bạn có muốn xóa danh mục không')"
+              href="/producer/delete-producer/{{_id}}"
+              onclick="return confirm('Bạn có muốn xóa thương hiệu không')"
             >
               <i class="fas fa-trash" style="color: red; font-size: 20px" 
-              title="Xóa danh mục" >
+              title="Xóa thương hiệu" >
             </i>
             </a>              
             </div>
@@ -46,7 +46,7 @@
   $(document).ready(function(){
     const length = $('#length').val();
     for(let i = 0; i < length; i++){
-      $(".list-product"+i).append($(".product"+i));
+      $(".list-producer"+i).append($(".product"+i));
     }
   });  
 </script>
@@ -71,13 +71,13 @@
                 <h6>{{this.name}}</h6>
                 <h6>Giá: {{this.price}}</h6>
                 <h6>Số lượng còn: {{this.quantity}}</h6>
-                <h6>Thương hiệu: {{this.producer}}</h6>
+                <h6>Danh mục: {{this.category}}</h6>
               </div>
             </div>         
             
             <div>
               <a href="/product/delete-product/{{_id}}" 
-                onclick="return confirm('Bạn có muốn xóa sản phẩm khỏi danh mục này không')">
+                onclick="return confirm('Bạn có muốn xóa sản phẩm khỏi thương hiệu này không')">
                 <i class="fas fa-trash" 
                   style="color: red; font-size: 20px"
                   title="Xóa sản phẩm" >

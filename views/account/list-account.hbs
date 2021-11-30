@@ -18,33 +18,47 @@
         <td>{{this.name}}</td>
         <td>{{this.address}}</td>
 
-        <td >
-          {{#ifCond this.status '==' 'true'}}
-            <i class="fas fa-check" style="color: green"></i>
+        <td>
+          {{#ifCond this.status "==" "true"}}
+            <i class="fas fa-check" style="color: green" title="Đang hoạt động"></i>
           {{else}}
-            <i class="fas fa-ban" style="color: red" ></i>
+            <i class="fas fa-ban" style="color: red" title="Đã bị khóa"></i>
           {{/ifCond}}
         </td>
-        <td >
-          <a href="/account/edit-account/{{_id}}">
-            <i class="far fa-edit"></i>
-          </a>
+        <td>
+          <div class="row">
+            <div class="col-3">
+              <a href="/account/edit-account/{{_id}}">
+                <i class="far fa-edit" title="Chỉnh sửa tài khoản"></i>
+              </a>
+            </div>
 
-          {{#ifCond this.status '==' 'true'}}          
-          <a
-            href="/account/block-account/{{_id}}"
-            onclick="return confirm('Bạn có muốn khóa tài khoản không')"
-          >
-            <i class="fas fa-ban" style="margin-left: 20px;color: red" ></i>
-          </a>
-          {{else}}
-          <a
-            href="/account/unblock-account/{{_id}}"
-            onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
-          >
-            <i class="fas fa-check" style="margin-left: 20px;color: green" ></i>
-          </a>
-          {{/ifCond}}
+            <div class="col-3">
+              {{#ifCond this.status "==" "true"}}
+                <a
+                  href="/account/block-account/{{_id}}"
+                  onclick="return confirm('Bạn có muốn khóa tài khoản không')"
+                >
+                  <i class="fas fa-ban" style="color: red;" title="Khóa tài khoản"></i>
+                </a>
+              {{else}}
+                <a
+                  href="/account/unblock-account/{{_id}}"
+                  onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
+                >
+                  <i class="fas fa-check" style="color: green" title="Mở khóa tài khoản"></i>
+                </a>
+              {{/ifCond}}
+            </div>
+
+            <div class="col-3">
+              <a href="/account/delete-account/{{_id}}"
+              onclick="return confirm('Bạn có muốn xóa tài khoản không')">
+                <i class="fas fa-trash" style="color: red" title="Xóa tài khoản"></i>
+              </a>
+            </div>
+
+          </div>
 
         </td>
       </tr>

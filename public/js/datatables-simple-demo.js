@@ -21,4 +21,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
   if (listCategory) {
     new simpleDatatables.DataTable(listCategory);
   }
+
+  const listProducer = document.getElementById("listProducer");
+  if (listProducer) {
+    new simpleDatatables.DataTable(listProducer);
+  }
 });

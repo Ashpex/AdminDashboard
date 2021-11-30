@@ -3,10 +3,11 @@
     <tr>
       <th>Tên sản phẩm</th>
       <th>Chi tiết</th>
-      <th>Chất lượng</th>
+      <th>Số lượng</th>
       <th>Giá</th>
       <th>Ảnh</th>
       <th>Danh mục</th>
+      <th>Thương hiệu</th>
       <th>Điều chỉnh</th>
     </tr>
   </thead>
@@ -16,7 +17,7 @@
       <tr>
         <td>{{this.name}}</td>
         <td>{{this.details}}</td>
-        <td>{{this.quanlity}}</td>
+        <td>{{this.quantity}}</td>
         <td>{{this.price}}</td>
         <td>
           <a href="{{this.image}}" target="_blank">
@@ -24,17 +25,18 @@
           </a>
         </td>
         <td>{{this.category}}</td>
+        <td>{{this.producer}}</td>
         <td>
           <div class="center">
             <a href="/product/edit-product/{{_id}}">
-              <i class="far fa-edit"></i>
+              <i class="far fa-edit" title="Chỉnh sửa sản phẩm"></i>
             </a>
 
             <a
               href="/product/delete-product/{{_id}}"
               onclick="return confirm('Bạn có muốn xóa không')"
             >
-              <i class="fas fa-trash" style="margin-left: 30px; color: red"></i>
+              <i class="fas fa-trash" style="margin-left: 30px; color: red" title="Xóa sản phẩm"></i>
             </a>
           </div>
 

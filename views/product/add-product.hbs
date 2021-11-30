@@ -5,45 +5,57 @@
         <div class="col-12 col-md-9 col-lg-7 col-xl-6">
           <div class="card mt-4" style="border-radius: 15px;">
             <div class="card-body p-5">
+              
               {{#if msg}}
-              <div class="alert alert-success">
-                {{msg}}
-              </div>
-              {{/if}}            
-<!-- enctype="multipart/form-data" -->
-              <h2 class="text-uppercase text-center mb-3">Thêm sản phẩm</h2>
+                <div class="alert alert-danger">
+                  {{msg}}
+                </div>
+              {{/if}}
+              
+              <div style="display: none;" id="message" class="alert alert-danger" role="alert">                
+              </div>          
 
-              <form  id="add-product-form" action="/product/add-product" method="POST" enctype="multipart/form-data">
+              <h2 class="text-uppercase text-center mb-3">Thêm sản phẩm</h2>
+{{!-- enctype="multipart/form-data" --}}
+              <form  id="add-product-form" action="/product/add-product" method="POST" >
+
+              {{!-- name --}}
                 <div class="form-outline mb-2">
-                  <label  class="form-label" for="form3Example1cg">Tên sản phẩm</label>
-                  <input name="name" type="text" id="form3Example1cg" class="form-control form-control-lg" />                  
+                  <label  class="form-label" for="name">Tên sản phẩm</label>
+                  <input name="name" type="text" id="name" class="form-control form-control-lg" required/>                  
                 </div>
 
+                {{!-- details --}}
                 <div class="form-outline mb-2">
-                  <label class="form-label" for="form3Example3cg">Chi tiết</label>
+                  <label class="form-label" for="details">Chi tiết</label>
                   <textarea
                     class="form-control"
-                    id="exampleFormControlTextarea1"
-                    rows="3"
+                    id="details"
+                    rows="5"
                     name="details"
+                    required
                   ></textarea>
                 </div>
 
+                {{!-- price --}}
                 <div class="form-outline mb-2">
-                  <label class="form-label" for="form3Example4cg">Giá</label>
-                  <input name="price" type="number" id="form3Example4cg" class="form-control form-control-lg" />
+                  <label class="form-label" for="price">Giá</label>
+                  <input name="price" type="number" id="price" class="form-control form-control-lg" required />
                 </div>
 
+                {{!-- quantity --}}
                 <div class="form-outline mb-2">
-                  <label class="form-label" for="form3Example4cg">Số Lượng</label>
-                  <input name="quantity" type="number" id="idQuantity" class="form-control form-control-lg" />
+                  <label class="form-label" for="quantity">Số lượng</label>
+                  <input name="quantity" type="number" id="quantity" class="form-control form-control-lg" required />
                 </div>
 
+                {{!-- image --}}       
                 <div class="form-outline mb-4">
                   <label class="form-label" for="fileImageProduct">Ảnh</label>
-                  <input name="image" type="file" id="fileImageProduct" class="form-control form-control-lg"/>
+                  <input name="image" type="file" id="fileImageProduct" class="form-control form-control-lg" required/>
                 </div>
 
+                {{!-- category --}} 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="product-category">Danh mục</label>
                   <select
@@ -52,22 +64,93 @@
                     class="form-control form-control-lg"
                   >
                     {{#each category}}
-                      <option  value="{{this._id}}">{{this.name}}</option>
+                      <option value="{{this._id}}">{{this.name}}</option>
                     {{/each}}
                   </select>
                 </div>
 
-                <input type="hidden" name="urlImage" id="url-image">
+                {{!-- producer --}}
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="product-category">Thương hiệu</label>
+                  <select
+                    id="product-producer"
+                    name="id_producer"
+                    class="form-control form-control-lg"
+                  >
+                    {{#each producer}}
+                      <option value="{{this._id}}">{{this.name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+
+                <input type="hidden" name="urlImage" id="url-image"/>
+                <input type="hidden" name="category" id="selected-category"/>
+                <input type="hidden" name="producer" id="selected-producer"/>
 
               </form>
 
                 <div class="d-flex justify-content-center mb-2">
                   <button onclick="myFunction()" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Thêm sản phẩm</button>
                 </div>
-
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script>
                   function myFunction(){
-                    (async () =>{
+                    (async () =>{                     
+                      const name = $('#name').val();
+                      const details = $('#details').val();
+                      const price = $('#price').val();
+                      const quantity = $('#quantity').val();
+                      const fileImageProduct = $('#fileImageProduct').val();
+
+                      if (name == "") {
+                        $('#message').show();
+                        $('#message').html('Bạn chưa nhập tên sản phẩm!');
+                        $('#name').focus();
+                        return;
+                      }
+                      if (details == "") {
+                        $('#message').show();
+                        $('#message').html('Bạn chưa nhập chi tiết sản phẩm!');
+                        $('#details').focus();
+                        return;
+                      }
+                      if (price == "") {
+                        $('#message').show();
+                        $('#message').html('Bạn chưa nhập giá sản phẩm!');
+                        $('#price').focus();
+                        return;
+                      }
+                      if (parseInt(price) < 0) {
+                        $('#message').show();
+                        $('#message').html('Giá sản phẩm không được nhỏ hơn 0!');
+                        $('#price').focus();
+                        return;
+                      }
+                      if (quantity == "") {
+                        $('#message').show();
+                        $('#message').html('Bạn chưa nhập số lượng sản phẩm!');
+                        $('#quantity').focus();
+                        return;
+                      }
+                      if (parseInt(quantity) < 0) {
+                        $('#message').show();
+                        $('#message').html('Số lượng sản phẩm không được nhỏ hơn 0!');
+                        $('#quantity').focus();
+                        return;
+                      }
+                      if (fileImageProduct == "") {
+                        $('#message').show();
+                        $('#message').html('Bạn chưa nhập ảnh sản phẩm!');
+                        $('#fileImageProduct').focus();
+                        return;
+                      }
+
+                      const valueCategory = $("#product-category option:selected").text();
+                      $('#selected-category').val(valueCategory);
+
+                      const valueProducer = $("#product-producer option:selected").text();
+                      $('#selected-producer').val(valueProducer);
+
                       const urlImage = await upload();
                       document.getElementById('url-image').value = urlImage;                
                       document.getElementById('add-product-form').submit();  

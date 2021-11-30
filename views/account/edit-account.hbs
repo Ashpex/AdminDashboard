@@ -11,22 +11,22 @@
               <input type="hidden" name="id" value="{{ account._id}}">
                 <div class="form-outline mb-2">
                   <label class="form-label" for="form3Example1cg">Email</label>
-                  <input name="email" type="email" id="form3Example1cg" class="form-control form-control-lg" value="{{account.email}}" />                  
+                  <input name="email" type="email" id="form3Example1cg" class="form-control form-control-lg" value="{{account.email}}"required />                  
                 </div>
 
                 <div class="form-outline mb-2">
                   <label class="form-label" for="form3Example3cg">Họ tên</label>
-                  <input name="name" type="text" id="form3Example3cg" class="form-control form-control-lg" value="{{account.name}}" />
+                  <input name="name" type="text" id="form3Example3cg" class="form-control form-control-lg" value="{{account.name}}" required/>
                 </div>
 
                 <div class="form-outline mb-2">
                   <label class="form-label" for="form3Example4cg">Mật khẩu</label>
-                  <input name="password" type="password" id="form3Example4cg" class="form-control form-control-lg" value="{{account.password}}"/>
+                  <input name="password" type="password" id="form3Example4cg" class="form-control form-control-lg" value="{{account.password}}" required/>
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form3Example4cdg">Địa chỉ</label>
-                  <input name="address" type="text" id="form3Example4cdg" class="form-control form-control-lg" value="{{account.address}}"/>
+                  <input name="address" type="text" id="form3Example4cdg" class="form-control form-control-lg" value="{{account.address}}"required/>
                 </div>
 
                 <div class="d-flex justify-content-center mb-2">

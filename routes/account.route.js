@@ -1,5 +1,5 @@
 const express = require("express");
-const User = require("../models/user.model");
+const User = require("../Models/user.model");
 
 const router = express.Router();
 
@@ -92,6 +92,14 @@ router.get("/unblock-account/:id", (req, res) => {
       res.redirect("/account/list-account");
     }
   );
+});
+
+// delete account
+router.get("/delete-account/:id", (req, res) => {
+  User.findByIdAndDelete(req.params.id, (err, account) => {
+    if (err) return next(err);
+    res.redirect("/account/list-account");
+  });
 });
 
 module.exports = router;
