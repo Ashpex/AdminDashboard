@@ -26,7 +26,11 @@ router.get("/add-product", async (req, res) => {
 });
 
 //add product post and add product id to category
-router.post("/add-product", (req, res) => {
+router.post("/add-product", async (req, res) => {
+  const category = await Category.findById(req.body.id_category);
+  const idProduct = to_slug(req.body.name) + "-" + Date.now();
+  const url = category.idCategory + "/" + idProduct;
+
   const product = new Product({
     name: req.body.name,
     details: req.body.details,
@@ -35,8 +39,9 @@ router.post("/add-product", (req, res) => {
     image: req.body.urlImage,
     category: req.body.category,
     producer: req.body.producer,
-    idProduct: to_slug(req.body.name) + "-" + Date.now(),
+    idProduct: idProduct,
     listIdRating: [],
+    url: url,
   });
 
   product.save((err) => {
@@ -107,6 +112,10 @@ router.get("/edit-product/:id", async (req, res) => {
 // and using async await
 router.post("/edit-product", async (req, res) => {
   // find product and update
+  const category = await Category.findById(req.body.id_category);
+  const idProduct = to_slug(req.body.name) + "-" + Date.now();
+  const url = category.idCategory + "/" + idProduct;
+
   const product = await Product.findByIdAndUpdate(
     req.body.id,
     {
@@ -118,8 +127,9 @@ router.post("/edit-product", async (req, res) => {
         image: req.body.urlImage,
         category: req.body.category,
         producer: req.body.producer,
-        idProduct: to_slug(req.body.name) + "-" + Date.now(),
+        idProduct: idProduct,
         listIdRating: [],
+        url: url,
       },
     },
     async (err, product) => {
@@ -144,7 +154,7 @@ router.post("/edit-product", async (req, res) => {
             await Category.findByIdAndUpdate(
               req.body.id_category,
               {
-                $push: {
+                $addToSet: {
                   listIdProduct: product._id,
                 },
               },
@@ -172,7 +182,7 @@ router.post("/edit-product", async (req, res) => {
                         await Producer.findByIdAndUpdate(
                           req.body.id_producer,
                           {
-                            $push: {
+                            $addToSet: {
                               listIdProduct: product._id,
                             },
                           },
