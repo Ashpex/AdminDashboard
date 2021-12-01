@@ -16,7 +16,7 @@
           <div class="row">
             <div class="col-4">
               <a href="/producer/edit-producer/{{_id}}">
-                <i class="far fa-edit" style="font-size: 20px;"
+                <i class="far fa-edit" style="font-size: 15px;"
                 title="Chỉnh sửa thương hiệu"></i>
               </a>
 
@@ -27,7 +27,7 @@
               href="/producer/delete-producer/{{_id}}"
               onclick="return confirm('Bạn có muốn xóa thương hiệu không')"
             >
-              <i class="fas fa-trash" style="color: red; font-size: 20px" 
+              <i class="fas fa-trash" style="color: red; font-size: 15px" 
               title="Xóa thương hiệu" >
             </i>
             </a>              
@@ -63,15 +63,15 @@
                 alt=""
                 width="100px"
                 height="100px"
-                style="margin-bottom: 5px; margin-right: 25px;"
+                style="margin-bottom: 5px; margin-right: 20px;"
                 />
               </a>            
 
               <div>
-                <h6>{{this.name}}</h6>
-                <h6>Giá: {{this.price}}</h6>
-                <h6>Số lượng còn: {{this.quantity}}</h6>
-                <h6>Danh mục: {{this.category}}</h6>
+                <p>{{this.name}}</p>
+                <p>Giá: {{this.price}}</p>
+                <p>Số lượng còn: {{this.quantity}}</p>
+                <p>Danh mục: {{this.category}}</p>
               </div>
             </div>         
             
@@ -79,7 +79,7 @@
               <a href="/product/delete-product/{{_id}}" 
                 onclick="return confirm('Bạn có muốn xóa sản phẩm khỏi thương hiệu này không')">
                 <i class="fas fa-trash" 
-                  style="color: red; font-size: 20px"
+                  style="color: red; font-size: 15px"
                   title="Xóa sản phẩm" >
                 </i>
               </a>              

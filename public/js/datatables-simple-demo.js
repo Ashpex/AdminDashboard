@@ -16,6 +16,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   if (listProduct) {
     new simpleDatatables.DataTable(listProduct);
   }
+  // $("#listProduct").DataTable();
 
   const listCategory = document.getElementById("listCategory");
   if (listCategory) {

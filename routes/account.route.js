@@ -1,16 +1,9 @@
 const express = require("express");
-const User = require("../Models/user.model");
+const UserController = require("../Controllers/user.controller.js");
 
 const router = express.Router();
 
-router.get("/list-account/", (req, res) => {
-  User.find({}, (err, account) => {
-    if (err) return next(err);
-    res.render("account/list-account", {
-      account,
-    });
-  });
-});
+router.get("/list-account/", UserController.getAllUsers);
 
 // add account
 router.get("/add-account", (req, res) => {
@@ -18,88 +11,21 @@ router.get("/add-account", (req, res) => {
 });
 
 // add account post
-router.post("/add-account", (req, res) => {
-  const { name, email, password, address } = req.body;
-  const newUser = new User({
-    name,
-    email,
-    password,
-    address,
-    status: true,
-  });
-  newUser.save((err) => {
-    if (err) return next(err);
-    res.redirect("/account/list-account");
-  });
-});
+router.post("/add-account", UserController.addAccount);
 
 // edit account
-router.get("/edit-account/:id", (req, res) => {
-  User.findById(req.params.id, (err, account) => {
-    if (err) return next(err);
-    res.render("account/edit-account", {
-      account,
-    });
-  });
-});
+router.get("/edit-account/:id", UserController.editAccountGet);
 
 // edit account post
-router.post("/edit-account", (req, res) => {
-  User.findByIdAndUpdate(
-    req.body.id,
-    {
-      $set: {
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.phone,
-        address: req.body.address,
-      },
-    },
-    (err, account) => {
-      if (err) return next(err);
-      res.redirect("/account/list-account");
-    }
-  );
-});
+router.post("/edit-account", UserController.editAccountPost);
 
 // block account
-router.get("/block-account/:id", (req, res) => {
-  User.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: {
-        status: false,
-      },
-    },
-    (err, account) => {
-      if (err) return next(err);
-      res.redirect("/account/list-account");
-    }
-  );
-});
+router.get("/block-account/:id", UserController.blockAccount);
 
 // unblock account
-router.get("/unblock-account/:id", (req, res) => {
-  User.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: {
-        status: true,
-      },
-    },
-    (err, account) => {
-      if (err) return next(err);
-      res.redirect("/account/list-account");
-    }
-  );
-});
+router.get("/unblock-account/:id", UserController.unblockAccount);
 
 // delete account
-router.get("/delete-account/:id", (req, res) => {
-  User.findByIdAndDelete(req.params.id, (err, account) => {
-    if (err) return next(err);
-    res.redirect("/account/list-account");
-  });
-});
+router.get("/delete-account/:id", UserController.deleteAccount);
 
 module.exports = router;
