@@ -62,10 +62,18 @@ app.get("/login", function (req, res) {
   res.render("login", { layout: false });
 });
 
+app.get("/404", function (req, res) {
+  res.render("errors/404", { layout: false });
+});
+
 app.use("/account", require("./routes/account.route"));
 app.use("/product", require("./routes/product.route"));
 app.use("/category", require("./routes/category.route"));
 app.use("/producer", require("./routes/producer.route"));
+
+app.use((req, res) => {
+  res.render("errors/404", { layout: false });
+});
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("App listening on port 3000");

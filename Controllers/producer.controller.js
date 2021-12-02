@@ -3,22 +3,50 @@ const Product = require("../Models/product.model");
 
 module.exports = {
   showListProducer: async (req, res) => {
-    const producers = await Producer.find();
-    const listProducts = [];
+    let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
+    let page = req.params.page || 1;
 
-    for (let i = 0; i < producers.length; i++) {
-      const product = await Product.find({
-        _id: { $in: producers[i].listIdProduct },
+    Producer.find() // find tất cả các data
+      .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+      .limit(perPage)
+      .exec((err, producers) => {
+        Producer.countDocuments(async (err, count) => {
+          // đếm để tính có bao nhiêu trang
+          if (err) return next(err);
+          let isCurrentPage;
+          const listProducts = [];
+
+          for (let i = 0; i < producers.length; i++) {
+            const product = await Product.find({
+              _id: { $in: producers[i].listIdProduct },
+            });
+
+            listProducts.push(product);
+          }
+          const pages = [];
+          for (let i = 1; i <= Math.ceil(count / perPage); i++) {
+            if (i === +page) {
+              isCurrentPage = true;
+            } else {
+              isCurrentPage = false;
+            }
+            pages.push({
+              page: i,
+              isCurrentPage: isCurrentPage,
+            });
+          }
+          res.render("producer/list-producer", {
+            producers,
+            pages,
+            isNextPage: page < Math.ceil(count / perPage),
+            isPreviousPage: page > 1,
+            nextPage: +page + 1,
+            previousPage: +page - 1,
+            products: listProducts,
+            length: listProducts.length,
+          });
+        });
       });
-
-      listProducts.push(product);
-    }
-
-    res.render("producer/list-producer", {
-      producers,
-      products: listProducts,
-      length: listProducts.length,
-    });
   },
   editProducerGet: (req, res) => {
     Producer.findById(req.params.id, (err, producer) => {

@@ -1,13 +1,40 @@
 const User = require("../Models/user.model");
 
 module.exports = {
-  getAllUsers: (req, res) => {
-    User.find({}, (err, account) => {
-      if (err) return next(err);
-      res.render("account/list-account", {
-        account,
+  getAllUsers: (req, res, next) => {
+    let perPage = 8; // số lượng sản phẩm xuất hiện trên 1 page
+    let page = req.params.page || 1;
+
+    User.find() // find tất cả các data
+      .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+      .limit(perPage)
+      .exec((err, account) => {
+        User.countDocuments((err, count) => {
+          // đếm để tính có bao nhiêu trang
+          if (err) return next(err);
+          let isCurrentPage;
+          const pages = [];
+          for (let i = 1; i <= Math.ceil(count / perPage); i++) {
+            if (i === +page) {
+              isCurrentPage = true;
+            } else {
+              isCurrentPage = false;
+            }
+            pages.push({
+              page: i,
+              isCurrentPage: isCurrentPage,
+            });
+          }
+          res.render("account/list-account", {
+            account,
+            pages,
+            isNextPage: page < Math.ceil(count / perPage),
+            isPreviousPage: page > 1,
+            nextPage: +page + 1,
+            previousPage: +page - 1,
+          });
+        });
       });
-    });
   },
   addAccount: (req, res) => {
     const { name, email, password, address } = req.body;

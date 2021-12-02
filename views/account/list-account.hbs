@@ -1,4 +1,4 @@
-<table id="listAccount">
+<table class="table table-hover table-striped table-bordered">
   <thead>
     <tr>
       <th>Email</th>
@@ -20,7 +20,11 @@
 
         <td>
           {{#ifCond this.status "==" "true"}}
-            <i class="fas fa-check" style="color: green" title="Đang hoạt động"></i>
+            <i
+              class="fas fa-check"
+              style="color: green"
+              title="Đang hoạt động"
+            ></i>
           {{else}}
             <i class="fas fa-ban" style="color: red" title="Đã bị khóa"></i>
           {{/ifCond}}
@@ -39,22 +43,36 @@
                   href="/account/block-account/{{_id}}"
                   onclick="return confirm('Bạn có muốn khóa tài khoản không')"
                 >
-                  <i class="fas fa-ban" style="color: red;" title="Khóa tài khoản"></i>
+                  <i
+                    class="fas fa-ban"
+                    style="color: red;"
+                    title="Khóa tài khoản"
+                  ></i>
                 </a>
               {{else}}
                 <a
                   href="/account/unblock-account/{{_id}}"
                   onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
                 >
-                  <i class="fas fa-check" style="color: green" title="Mở khóa tài khoản"></i>
+                  <i
+                    class="fas fa-check"
+                    style="color: green"
+                    title="Mở khóa tài khoản"
+                  ></i>
                 </a>
               {{/ifCond}}
             </div>
 
             <div class="col-3">
-              <a href="/account/delete-account/{{_id}}"
-              onclick="return confirm('Bạn có muốn xóa tài khoản không')">
-                <i class="fas fa-trash" style="color: red" title="Xóa tài khoản"></i>
+              <a
+                href="/account/delete-account/{{_id}}"
+                onclick="return confirm('Bạn có muốn xóa tài khoản không')"
+              >
+                <i
+                  class="fas fa-trash"
+                  style="color: red"
+                  title="Xóa tài khoản"
+                ></i>
               </a>
             </div>
 
@@ -65,3 +83,28 @@
     {{/each}}
   </tbody>
 </table>
+
+<div class="center mb-2 mt-3">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item {{#unless this.isPreviousPage}} disabled {{/unless}}">
+                <a class="page-link " href="/account/list-account/{{this.previousPage}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {{#each pages}}
+                <li class="page-item {{#if this.isCurrentPage}} active {{/if}}">
+                    <a class="page-link" href="/account/list-account/{{this.page}}">{{this.page}}</a>
+                </li>
+            {{/each}}
+
+            <li class="page-item {{#unless this.isNextPage}} disabled {{/unless}}">
+                <a class="page-link" href="/account/list-account/{{this.nextPage}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

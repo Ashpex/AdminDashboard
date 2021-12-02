@@ -1,9 +1,12 @@
 const express = require("express");
 const UserController = require("../Controllers/user.controller.js");
+const User = require("../Models/user.model.js");
 
 const router = express.Router();
 
-router.get("/list-account/", UserController.getAllUsers);
+router.get("/list-account/:page", UserController.getAllUsers);
+
+// router.get("/list-account/:page", );
 
 // add account
 router.get("/add-account", (req, res) => {

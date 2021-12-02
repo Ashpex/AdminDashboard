@@ -1,4 +1,4 @@
-<table id="listProducer">
+<table class="table table-bordered">
   <thead>
     <tr>
       <th>Tên thương hiệu</th>
@@ -59,11 +59,12 @@
             <div style="display: flex;">
               <a href="{{this.image}}" target="_blank">
                 <img
+                class="thumbnail img-responsive"
                 src="{{this.image}}"
                 alt=""
-                width="100px"
-                height="100px"
-                style="margin-bottom: 5px; margin-right: 20px;"
+                width="150px"
+                height="150px"
+                style="margin-bottom: 5px; margin-right: 20px; border-radius: 10px;"
                 />
               </a>            
 
@@ -79,7 +80,7 @@
               <a href="/product/delete-product/{{_id}}" 
                 onclick="return confirm('Bạn có muốn xóa sản phẩm khỏi thương hiệu này không')">
                 <i class="fas fa-trash" 
-                  style="color: red; font-size: 15px"
+                  style="color: red; font-size: 15px; margin-right: 20px"
                   title="Xóa sản phẩm" >
                 </i>
               </a>              
@@ -92,3 +93,28 @@
     {{/if}}
   </div>
 {{/each}}
+
+<div class="center mb-2 mt-3">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item {{#unless this.isPreviousPage}} disabled {{/unless}}">
+                <a class="page-link " href="/producer/list-producer/{{this.previousPage}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {{#each pages}}
+                <li class="page-item {{#if this.isCurrentPage}} active {{/if}}">
+                    <a class="page-link" href="/producer/list-producer/{{this.page}}">{{this.page}}</a>
+                </li>
+            {{/each}}
+
+            <li class="page-item {{#unless this.isNextPage}} disabled {{/unless}}">
+                <a class="page-link" href="/producer/list-producer/{{this.nextPage}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

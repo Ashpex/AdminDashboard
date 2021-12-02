@@ -5,22 +5,50 @@ const to_slug = require("../public/js/slug.js");
 
 module.exports = {
   showListCategory: async (req, res) => {
-    const categories = await Category.find();
-    const listProducts = [];
+    let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
+    let page = req.params.page || 1;
 
-    for (let i = 0; i < categories.length; i++) {
-      const product = await Product.find({
-        _id: { $in: categories[i].listIdProduct },
+    Category.find() // find tất cả các data
+      .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+      .limit(perPage)
+      .exec((err, categories) => {
+        Category.countDocuments(async (err, count) => {
+          // đếm để tính có bao nhiêu trang
+          if (err) return next(err);
+          const listProducts = [];
+
+          for (let i = 0; i < categories.length; i++) {
+            const product = await Product.find({
+              _id: { $in: categories[i].listIdProduct },
+            });
+
+            listProducts.push(product);
+          }
+          let isCurrentPage;
+          const pages = [];
+          for (let i = 1; i <= Math.ceil(count / perPage); i++) {
+            if (i === +page) {
+              isCurrentPage = true;
+            } else {
+              isCurrentPage = false;
+            }
+            pages.push({
+              page: i,
+              isCurrentPage: isCurrentPage,
+            });
+          }
+          res.render("category/list-category", {
+            categories,
+            pages,
+            isNextPage: page < Math.ceil(count / perPage),
+            isPreviousPage: page > 1,
+            nextPage: +page + 1,
+            previousPage: +page - 1,
+            products: listProducts,
+            length: listProducts.length,
+          });
+        });
       });
-
-      listProducts.push(product);
-    }
-
-    res.render("category/list-category", {
-      categories,
-      products: listProducts,
-      length: listProducts.length,
-    });
   },
   editCategoryGet: (req, res) => {
     Category.findById(req.params.id, (err, category) => {
