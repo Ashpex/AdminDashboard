@@ -16,6 +16,7 @@ const ProductSchema = new Schema(
     producer: String,
     idProduct: String,
     listIdRating: [{ type: Schema.Types.ObjectId }],
+    url: String,
   },
   { collection: "product" }
 );

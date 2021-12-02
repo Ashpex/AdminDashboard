@@ -54,7 +54,10 @@ module.exports = {
     });
   },
   //add product post and add product id to category and producer
-  addProductPost: (req, res) => {
+  addProductPost: async (req, res) => {
+    const category = await Category.findById(req.body.id_category);
+    const idProduct = to_slug(req.body.name) + "-" + Date.now();
+    const url = category.idCategory + "/" + idProduct;
     const product = new Product({
       name: req.body.name,
       details: req.body.details,
@@ -63,8 +66,9 @@ module.exports = {
       image: req.body.urlImage,
       category: req.body.category,
       producer: req.body.producer,
-      idProduct: to_slug(req.body.name) + "-" + Date.now(),
+      idProduct: idProduct,
       listIdRating: [],
+      url: url,
     });
 
     product.save((err) => {
@@ -133,6 +137,10 @@ module.exports = {
   // and using async await
   editProductPost: async (req, res) => {
     // find product and update
+    const category = await Category.findById(req.body.id_category);
+    const idProduct = to_slug(req.body.name) + "-" + Date.now();
+    const url = category.idCategory + "/" + idProduct;
+
     const product = await Product.findByIdAndUpdate(
       req.body.id,
       {
@@ -144,8 +152,9 @@ module.exports = {
           image: req.body.urlImage,
           category: req.body.category,
           producer: req.body.producer,
-          idProduct: to_slug(req.body.name) + "-" + Date.now(),
+          idProduct: idProduct,
           listIdRating: [],
+          url: url,
         },
       },
       async (err, product) => {
@@ -170,7 +179,7 @@ module.exports = {
               await Category.findByIdAndUpdate(
                 req.body.id_category,
                 {
-                  $push: {
+                  $addToSet: {
                     listIdProduct: product._id,
                   },
                 },
@@ -198,7 +207,7 @@ module.exports = {
                           await Producer.findByIdAndUpdate(
                             req.body.id_producer,
                             {
-                              $push: {
+                              $addToSet: {
                                 listIdProduct: product._id,
                               },
                             },
