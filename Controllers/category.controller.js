@@ -1,5 +1,5 @@
-const Category = require("../Models/category.model");
-const Product = require("../Models/product.model");
+const Category = require("../models/category.model");
+const Product = require("../models/product.model");
 
 const to_slug = require("../public/js/slug.js");
 

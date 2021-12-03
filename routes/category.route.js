@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const CategoryController = require("../Controllers/category.controller");
+const CategoryController = require("../controllers/category.controller");
 
 // show list category and product in this category
 router.get("/list-category/:page", CategoryController.showListCategory);

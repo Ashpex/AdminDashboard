@@ -8,7 +8,7 @@ const {
 } = require("@handlebars/allow-prototype-access");
 const env = require("dotenv").config();
 
-var app = express();
+const app = express();
 
 app.engine(
   "hbs",
@@ -54,16 +54,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
+require("./middlewares/session")(app);
+require("./middlewares/passport")(app);
+app.use(require("./middlewares/locals"));
+
+// app.use(function (req, res, next) {
+//   if (!req.user)
+//     res.set(
+//       "Cache-Control",
+//       "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
+//     );
+//   next();
+// });
+
+app.use("/admin", require("./routes/admin.route"));
+
+app.use((req, res, next) => {
+  if (!req.user) {
+    res.redirect("/admin/login");
+  } else {
+    next();
+  }
+});
+
 app.get("/", function (req, res) {
   res.render("home");
-});
-
-app.get("/login", function (req, res) {
-  res.render("login", { layout: false });
-});
-
-app.get("/404", function (req, res) {
-  res.render("errors/404", { layout: false });
 });
 
 app.use("/account", require("./routes/account.route"));

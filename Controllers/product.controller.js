@@ -1,6 +1,6 @@
-const Product = require("../Models/product.model");
-const Category = require("../Models/category.model");
-const Producer = require("../Models/producer.model");
+const Product = require("../models/product.model");
+const Category = require("../models/category.model");
+const Producer = require("../models/producer.model");
 const to_slug = require("../public/js/slug.js");
 
 module.exports = {

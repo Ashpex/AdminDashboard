@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const ProducerController = require("../Controllers/producer.controller");
+const ProducerController = require("../controllers/producer.controller");
 
 // show list of producers
 router.get("/list-producer/:page", ProducerController.showListProducer);

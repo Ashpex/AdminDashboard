@@ -1,5 +1,5 @@
-const Producer = require("../Models/producer.model");
-const Product = require("../Models/product.model");
+const Producer = require("../models/producer.model");
+const Product = require("../models/product.model");
 
 module.exports = {
   showListProducer: async (req, res) => {
