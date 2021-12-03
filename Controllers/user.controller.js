@@ -47,7 +47,7 @@ module.exports = {
     });
     newUser.save((err) => {
       if (err) return next(err);
-      res.redirect("/account/list-account");
+      res.redirect("/account/list-account/1");
     });
   },
   editAccountGet: (req, res) => {
@@ -71,7 +71,7 @@ module.exports = {
       },
       (err, account) => {
         if (err) return next(err);
-        res.redirect("/account/list-account");
+        res.redirect("/account/list-account/1");
       }
     );
   },
@@ -85,7 +85,7 @@ module.exports = {
       },
       (err, account) => {
         if (err) return next(err);
-        res.redirect("/account/list-account");
+        res.redirect("/account/list-account/1");
       }
     );
   },
@@ -99,14 +99,14 @@ module.exports = {
       },
       (err, account) => {
         if (err) return next(err);
-        res.redirect("/account/list-account");
+        res.redirect("/account/list-account/1");
       }
     );
   },
   deleteAccount: (req, res) => {
     User.findByIdAndDelete(req.params.id, (err, account) => {
       if (err) return next(err);
-      res.redirect("/account/list-account");
+      res.redirect("/account/list-account/1");
     });
   },
 };

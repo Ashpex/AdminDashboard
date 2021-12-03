@@ -1,4 +1,15 @@
-<table class="table table-bordered">
+<div id="search-form" class="row flex-row-reverse mt-3 me-5">
+  <div class="p-1 bg-light rounded rounded-pill shadow-lg col-4">
+    <div class="input-group">
+      <input id="myInput" type="search" onkeyup="myFunction()" placeholder="Nhập tên danh mục bạn cần tìm?" aria-describedby="btn-search" class="form-control border-0 bg-light">
+      <div class="input-group-append">
+        <button id="btn-search" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table id="myTable" class="table table-bordered">
   <thead>
     <tr>
       <th>Tên danh mục</th>

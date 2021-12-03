@@ -1,85 +1,99 @@
-<table class="table table-hover table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>Họ tên</th>
-      <th>Địa chỉ</th>
-      <th>Trạng thái</th>
-      <th>Điều chỉnh</th>
-    </tr>
-  </thead>
+<div id="search-form" class="row flex-row-reverse mt-3 me-5">
+  <div class="p-1 bg-light rounded rounded-pill shadow-lg col-4">
+    <div class="input-group">
+      <input id="myInput" type="search" onkeyup="myFunction()" placeholder="Nhập email bạn cần tìm?" aria-describedby="btn-search" class="form-control border-0 bg-light">
+      <div class="input-group-append">
+        <button id="btn-search" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <tbody>
-    {{#each account}}
+
+<div>
+  <table id="myTable" class="table table-hover table-striped table-bordered">
+    <thead>
       <tr>
-        <td>{{this.email}}</td>
-        <td>{{this.name}}</td>
-        <td>{{this.address}}</td>
-
-        <td class="text-center">
-          {{#ifCond this.status "==" "true"}}
-            <i
-              class="fas fa-check"
-              style="color: green"
-              title="Đang hoạt động"
-            ></i>
-            {{!-- <i class="fas fa-user-lock"></i> --}}
-          {{else}}
-            <i class="fas fa-user-lock" style="color: red" title="Đã bị khóa"></i>
-          {{/ifCond}}
-        </td>
-        <td>
-          <div class="row">
-            <div class="col-3">
-              <a href="/account/edit-account/{{_id}}">
-                <i class="far fa-edit" title="Chỉnh sửa tài khoản"></i>
-              </a>
-            </div>
-
-            <div class="col-3">
-              {{#ifCond this.status "==" "true"}}
-                <a
-                  href="/account/block-account/{{_id}}"
-                  onclick="return confirm('Bạn có muốn khóa tài khoản không')"
-                >
-                  <i
-                    class="fas fa-user-lock"
-                    style="color: red;"
-                    title="Khóa tài khoản"
-                  ></i>
-                </a>
-              {{else}}
-                <a
-                  href="/account/unblock-account/{{_id}}"
-                  onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
-                >
-                  <i
-                    class="fas fa-check"
-                    style="color: green"
-                    title="Mở khóa tài khoản"
-                  ></i>
-                </a>
-              {{/ifCond}}
-            </div>
-
-            <div class="col-3">
-              <a
-                href="/account/delete-account/{{_id}}"
-                onclick="return confirm('Bạn có muốn xóa tài khoản không')"
-              >
-                <i
-                  class="fas fa-trash"
-                  style="color: red"
-                  title="Xóa tài khoản"
-                ></i>
-              </a>
-            </div>
-          </div>
-        </td>
+        <th>Email</th>
+        <th>Họ tên</th>
+        <th>Địa chỉ</th>
+        <th>Trạng thái</th>
+        <th>Điều chỉnh</th>
       </tr>
-    {{/each}}
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      {{#each account}}
+        <tr>
+          <td>{{this.email}}</td>
+          <td>{{this.name}}</td>
+          <td>{{this.address}}</td>
+
+          <td class="text-center">
+            {{#ifCond this.status "==" "true"}}
+              <i
+                class="fas fa-check"
+                style="color: green"
+                title="Đang hoạt động"
+              ></i>
+              {{!-- <i class="fas fa-user-lock"></i> --}}
+            {{else}}
+              <i class="fas fa-user-lock" style="color: red" title="Đã bị khóa"></i>
+            {{/ifCond}}
+          </td>
+          <td>
+            <div class="row">
+              <div class="col-3">
+                <a href="/account/edit-account/{{_id}}">
+                  <i class="far fa-edit" title="Chỉnh sửa tài khoản"></i>
+                </a>
+              </div>
+
+              <div class="col-3">
+                {{#ifCond this.status "==" "true"}}
+                  <a
+                    href="/account/block-account/{{_id}}"
+                    onclick="return confirm('Bạn có muốn khóa tài khoản không')"
+                  >
+                    <i
+                      class="fas fa-user-lock"
+                      style="color: red;"
+                      title="Khóa tài khoản"
+                    ></i>
+                  </a>
+                {{else}}
+                  <a
+                    href="/account/unblock-account/{{_id}}"
+                    onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
+                  >
+                    <i
+                      class="fas fa-check"
+                      style="color: green"
+                      title="Mở khóa tài khoản"
+                    ></i>
+                  </a>
+                {{/ifCond}}
+              </div>
+
+              <div class="col-3">
+                <a
+                  href="/account/delete-account/{{_id}}"
+                  onclick="return confirm('Bạn có muốn xóa tài khoản không')"
+                >
+                  <i
+                    class="fas fa-trash"
+                    style="color: red"
+                    title="Xóa tài khoản"
+                  ></i>
+                </a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
 
 <div class="center mb-2 mt-3">
     <nav aria-label="Page navigation example">

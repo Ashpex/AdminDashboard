@@ -69,7 +69,7 @@ module.exports = {
         if (err) {
           console.log(err);
         } else {
-          res.redirect("/producer/list-producer");
+          res.redirect("/producer/list-producer/1");
         }
       }
     );
@@ -83,7 +83,7 @@ module.exports = {
     }
 
     await Producer.findByIdAndDelete(req.params.id);
-    res.redirect("/producer/list-producer");
+    res.redirect("/producer/list-producer/1");
   },
   addProducerPost: async (req, res) => {
     const producer = new Producer({
@@ -91,6 +91,6 @@ module.exports = {
       listIdProduct: [],
     });
     await producer.save();
-    res.redirect("/producer/list-producer");
+    res.redirect("/producer/list-producer/1");
   },
 };

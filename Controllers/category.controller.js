@@ -72,7 +72,7 @@ module.exports = {
         if (err) {
           console.log(err);
         } else {
-          res.redirect("/category/list-category");
+          res.redirect("/category/list-category/1");
         }
       }
     );
@@ -87,7 +87,7 @@ module.exports = {
     }
 
     await Category.findByIdAndDelete(req.params.id);
-    res.redirect("/category/list-category");
+    res.redirect("/category/list-category/1");
   },
   addCategoryPost: (req, res) => {
     const category = new Category({
@@ -100,7 +100,7 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        res.redirect("/category/list-category");
+        res.redirect("/category/list-category/1");
       }
     });
   },

@@ -159,7 +159,7 @@ router.get("/list-admin/:page", async (req, res, next) => {
     return res.redirect("/admin/login");
   }
   let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
-  let page = req.params.page || 1;
+  let page = req.params.page || 1; // trang hiện tại
 
   Admin.find() // find tất cả các data
     .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0

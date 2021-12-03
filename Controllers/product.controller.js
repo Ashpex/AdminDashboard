@@ -5,7 +5,7 @@ const to_slug = require("../public/js/slug.js");
 
 module.exports = {
   showListProduct: (req, res) => {
-    let perPage = 4; // số lượng sản phẩm xuất hiện trên 1 page
+    let perPage = 3; // số lượng sản phẩm xuất hiện trên 1 page
     let page = req.params.page || 1;
 
     Product.find() // find tất cả các data
@@ -102,7 +102,7 @@ module.exports = {
                   if (err) {
                     console.log(err);
                   } else {
-                    res.redirect("/product/list-product");
+                    res.redirect("/product/list-product/1");
                   }
                 }
               );
@@ -215,7 +215,7 @@ module.exports = {
                               if (err) {
                                 console.log(err);
                               } else {
-                                res.redirect("/product/list-product");
+                                res.redirect("/product/list-product/1");
                               }
                             }
                           ).clone();
@@ -267,7 +267,7 @@ module.exports = {
                 if (err) {
                   console.log(err);
                 } else {
-                  res.redirect("/product/list-product");
+                  res.redirect("/product/list-product/1");
                 }
               }
             ).clone();
