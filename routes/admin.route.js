@@ -56,20 +56,20 @@ router.get("/logout", (req, res, next) => {
     domain: "http://localhost:3000",
     sameSite: true,
   });
-  req.logout();
+  req.logOut();
   req.session.destroy(function (err) {
     res.redirect("/admin/login");
   });
 });
 
-router.get("/create-admin", (req, res, next) => {
+router.get("/add-admin", (req, res, next) => {
   if (!req.user) {
     return res.redirect("/admin/login");
   }
-  return res.render("admin/create-admin");
+  return res.render("admin/add-admin");
 });
 
-router.post("/create-admin", (req, res, next) => {
+router.post("/add-admin", (req, res, next) => {
   const hash = bcrypt.hashSync(req.body.password, 10);
 
   const admin = new Admin({
@@ -80,15 +80,119 @@ router.post("/create-admin", (req, res, next) => {
 
   admin.save((err) => {
     if (err) return next(err);
-    res.redirect("/admin/login");
+    res.redirect("/admin/list-admin/1");
   });
 });
 
-router.get("/profile/:id", auth, (req, res, next) => {
+router.get("/profile", auth, async (req, res, next) => {
   if (!req.user) {
     return res.redirect("/admin/login");
   }
-  return res.render("admin/profile", { id: req.params.id });
+  // find admin by id using await
+  const admin = await Admin.findById(res.locals.authUser._id);
+  return res.render("admin/profile", { id: res.locals.authUser._id, admin });
+});
+
+// edit profile
+router.get("/edit-profile", async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/admin/login");
+  }
+  // find admin by id using await
+  const admin = await Admin.findById(res.locals.authUser._id);
+  return res.render("admin/edit-profile", {
+    id: res.locals.authUser._id,
+    admin,
+  });
+});
+
+// edit profile post
+router.post("/edit-profile", async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/admin/login");
+  }
+  const admin = await Admin.findById(req.body.id);
+  admin.name = req.body.name;
+  admin.username = req.body.username;
+  await admin.save();
+  return res.redirect("/admin/profile");
+});
+
+// change password
+router.get("/change-password", async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/admin/login");
+  }
+  return res.render("admin/change-password", {
+    id: res.locals.authUser._id,
+  });
+});
+
+// change password post
+router.post("/change-password", async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/admin/login");
+  }
+  const admin = await Admin.findById(req.body.id);
+  const isMatch = bcrypt.compareSync(req.body.oldPassword, admin.password);
+  if (!isMatch) {
+    return res.render("admin/change-password", {
+      id: res.locals.authUser._id,
+      error: "Mật khẩu cũ không đúng",
+    });
+  }
+  if (req.body.newPassword !== req.body.confirmPassword) {
+    return res.render("admin/change-password", {
+      id: res.locals.authUser._id,
+      error: "Mật khẩu mới không trùng khớp",
+    });
+  }
+  const hash = bcrypt.hashSync(req.body.newPassword, 10);
+  admin.password = hash;
+  await admin.save();
+  return res.redirect("/admin/profile");
+});
+
+// show all admin
+router.get("/list-admin/:page", async (req, res, next) => {
+  if (!req.user) {
+    return res.redirect("/admin/login");
+  }
+  let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
+  let page = req.params.page || 1;
+
+  Admin.find() // find tất cả các data
+    .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+    .limit(perPage)
+    .exec((err, admins) => {
+      Admin.countDocuments((err, count) => {
+        // đếm để tính có bao nhiêu trang
+        if (err) return next(err);
+        let isCurrentPage;
+        const pages = [];
+        for (let i = 1; i <= Math.ceil(count / perPage); i++) {
+          if (i === +page) {
+            isCurrentPage = true;
+          } else {
+            isCurrentPage = false;
+          }
+          pages.push({
+            page: i,
+            isCurrentPage: isCurrentPage,
+          });
+        }
+        res.render("admin/list-admin", {
+          admins,
+          pages,
+          isNextPage: page < Math.ceil(count / perPage),
+          isPreviousPage: page > 1,
+          nextPage: +page + 1,
+          previousPage: +page - 1,
+        });
+      });
+    });
+  // const admins = await Admin.find();
+  // return res.render("admin/list-admin", { admins });
 });
 
 module.exports = router;

@@ -2,7 +2,6 @@
   <thead>
     <tr>
       <th>Email</th>
-      <th>Mật khẩu</th>
       <th>Họ tên</th>
       <th>Địa chỉ</th>
       <th>Trạng thái</th>
@@ -14,19 +13,19 @@
     {{#each account}}
       <tr>
         <td>{{this.email}}</td>
-        <td>{{this.password}}</td>
         <td>{{this.name}}</td>
         <td>{{this.address}}</td>
 
-        <td>
+        <td class="text-center">
           {{#ifCond this.status "==" "true"}}
             <i
               class="fas fa-check"
               style="color: green"
               title="Đang hoạt động"
             ></i>
+            {{!-- <i class="fas fa-user-lock"></i> --}}
           {{else}}
-            <i class="fas fa-ban" style="color: red" title="Đã bị khóa"></i>
+            <i class="fas fa-user-lock" style="color: red" title="Đã bị khóa"></i>
           {{/ifCond}}
         </td>
         <td>
@@ -44,7 +43,7 @@
                   onclick="return confirm('Bạn có muốn khóa tài khoản không')"
                 >
                   <i
-                    class="fas fa-ban"
+                    class="fas fa-user-lock"
                     style="color: red;"
                     title="Khóa tài khoản"
                   ></i>
@@ -75,9 +74,7 @@
                 ></i>
               </a>
             </div>
-
           </div>
-
         </td>
       </tr>
     {{/each}}

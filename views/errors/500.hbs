@@ -1,51 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Lỗi 500</title>
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
-        <div id="layoutError">
-            <div id="layoutError_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-6">
-                                <div class="text-center mt-4">
-                                    <h1 class="display-1">500</h1>
-                                    <p class="lead">Lỗi máy chủ</p>
-                                    <a href="/">
-                                        <i class="fas fa-arrow-left me-1"></i>
-                                        Quay lại trang chủ
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
+<html>
+  <head>
+    <title>500 Errors</title>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      body, html { height: 100%; }
+    </style>
+    <link rel="stylesheet" href="/login/css/style.css" />
+  </head>
+
+  <body
+    class="img js-fullheight"
+    style="background-image: url(/login/images/bg.jpg)"
+  >
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-md-12">
+          <div class="card w-50 shadow mx-auto">
+            <div class="card-body text-center" >
+              <h1 class="card-title">Oops!</h1>
+              <h2>500 Error</h2>
+              <div>{{error}}</div>
+              <div class="my-4">
+                <a href="/" class="btn btn-primary btn-lg">
+                  <i class="fa fa-home" aria-hidden="true"></i>
+                  Take Me Home
+                </a>
+              </div>
             </div>
-            <div id="layoutError_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; </div>
-                            <div>
-                                <a href="#">Chính sách bảo mật</a>
-                                &middot;
-                                <a href="#">Điều khoản &amp; Điều kiện</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+          </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-    </body>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    ></script>
+  </body>
+
 </html>

@@ -90,6 +90,11 @@ app.use((req, res) => {
   res.render("errors/404", { layout: false });
 });
 
+app.use((err, req, res, next) => {
+  console.log(err.message);
+  res.status(500).render("errors/500", { layout: false, error: err.message });
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log("App listening on port 3000");
 });
