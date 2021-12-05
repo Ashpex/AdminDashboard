@@ -56,6 +56,11 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 require("./middlewares/session")(app);
 require("./middlewares/passport")(app);
+
+// require models
+const Admin = require("./models/admin.models");
+const AdminController = require("./controllers/admin.controller");
+
 app.use(require("./middlewares/locals"));
 
 // app.use(function (req, res, next) {
