@@ -9,6 +9,7 @@ const CategorySchema = new Schema(
   {
     name: String,
     idCategory: String,
+    image: String,
     listIdProduct: [{ type: mongoose.Schema.Types.ObjectId }],
   },
   { collection: "category" }

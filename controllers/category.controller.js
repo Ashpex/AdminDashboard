@@ -66,6 +66,7 @@ module.exports = {
       req.body.id,
       {
         name: req.body.name,
+        image: req.body.urlImage,
         idCategory: to_slug(req.body.name) + "-" + Date.now(),
       },
       (err, category) => {
@@ -93,6 +94,7 @@ module.exports = {
     const category = new Category({
       name: req.body.name,
       idCategory: to_slug(req.body.name) + "-" + Date.now(),
+      image: req.body.urlImage,
       listIdProduct: [],
     });
 
