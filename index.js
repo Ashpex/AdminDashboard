@@ -43,6 +43,9 @@ app.engine(
             return options.inverse(this);
         }
       },
+      json: function (context) {
+        return JSON.stringify(context);
+      },
     },
   })
 );

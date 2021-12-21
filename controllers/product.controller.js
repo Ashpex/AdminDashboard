@@ -58,12 +58,16 @@ module.exports = {
     const category = await Category.findById(req.body.id_category);
     const idProduct = to_slug(req.body.name) + "-" + Date.now();
     const url = category.idCategory + "/" + idProduct;
+
+    const listImgExtra = await req.body.listUrlImageExtra.split(",");
+
     const product = new Product({
       name: req.body.name,
       details: req.body.details,
       quantity: req.body.quantity,
       price: req.body.price,
       image: req.body.urlImage,
+      listImgExtra: listImgExtra,
       category: req.body.category,
       producer: req.body.producer,
       idProduct: idProduct,
@@ -120,9 +124,15 @@ module.exports = {
 
     // find id category that have this product id in listIdProduct
     Product.findById(req.params.id, (err, product) => {
-      if (err) return next(err);
+      if (err) {
+        console.log(err);
+        return;
+      }
       Category.find({ listIdProduct: product._id }, (err, currentCategory) => {
-        if (err) return next(err);
+        if (err) {
+          console.log(err);
+          return;
+        }
         res.render("product/edit-product", {
           product,
           producer,
@@ -140,7 +150,7 @@ module.exports = {
     const category = await Category.findById(req.body.id_category);
     const idProduct = to_slug(req.body.name) + "-" + Date.now();
     const url = category.idCategory + "/" + idProduct;
-
+    const listImgExtra = await req.body.listUrlImageExtra.split(",");
     const product = await Product.findByIdAndUpdate(
       req.body.id,
       {
@@ -150,6 +160,7 @@ module.exports = {
           quantity: req.body.quantity,
           price: req.body.price,
           image: req.body.urlImage,
+          listImgExtra: listImgExtra,
           category: req.body.category,
           producer: req.body.producer,
           idProduct: idProduct,

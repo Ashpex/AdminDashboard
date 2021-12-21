@@ -12,6 +12,7 @@ const ProductSchema = new Schema(
     quantity: Number,
     price: Number,
     image: String,
+    listImgExtra: [],
     category: String,
     producer: String,
     idProduct: String,
