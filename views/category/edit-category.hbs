@@ -17,6 +17,10 @@
                   <input name="name" type="text" id="name" class="form-control form-control-lg"
                     value="{{category.name}}" required />
                 </div>
+                {{!-- image --}}
+                <div class="center">
+                  <img src="{{category.image}}" alt="" width="100px" height="100px" />
+                </div>
                 <div class="form-outline mb-4">
                   <label class="form-label" for="fileImageProduct">Ảnh</label>
                   <input name="image" type="file" id="fileImageProduct" class="form-control form-control-lg" required />
@@ -27,7 +31,7 @@
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
                     style="color: white !important">Cập nhật</button>
                 </div>
-                <input type="hidden" name="urlImage" id="url-image" />
+                <input type="hidden" name="urlImage" id="url-image" value="{{category.image}}" />
               </form>
 
             </div>
@@ -52,9 +56,11 @@
                     $('#fileImageProduct').focus();
                     return;
                   }
+                  if (fileImageProduct != "") {
+                    const urlImage = await upload("#fileImageProduct");
+                    document.getElementById('url-image').value = urlImage;
+                  }
 
-                  const urlImage = await upload();
-                  document.getElementById('url-image').value = urlImage;
                   document.getElementById('edit-category-form').submit();
                 })();
               }
