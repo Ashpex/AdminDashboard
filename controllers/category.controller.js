@@ -61,13 +61,27 @@ module.exports = {
       }
     });
   },
-  editCategoryPost: (req, res) => {
+  editCategoryPost: async (req, res) => {
+    const name = req.body.name;
+    const image = req.body.urlImage;
+    const idCategory = to_slug(req.body.name) + "-" + Date.now();
+    const category = await Category.findById(req.body.id);
+    console.log(category);
+    const listIdProduct = category.listIdProduct;
+    for await (let idProduct of listIdProduct) {
+      let product = await Product.findById(idProduct);
+      console.log(product);
+      let url = idCategory + "/" + product.idProduct;
+      await Product.findByIdAndUpdate(idProduct, {
+        url: url,
+      });
+    }
     Category.findByIdAndUpdate(
       req.body.id,
       {
         name: req.body.name,
         image: req.body.urlImage,
-        idCategory: to_slug(req.body.name) + "-" + Date.now(),
+        idCategory: idCategory,
       },
       (err, category) => {
         if (err) {

@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-outline mb-4">
                   <label class="form-label" for="fileImageProduct">Ảnh</label>
-                  <input name="image" type="file" id="fileImageProduct" class="form-control form-control-lg" required />
+                  <input name="image" type="file" id="fileImageProduct" class="form-control form-control-lg" />
                 </div>
 
                 <div class="d-flex justify-content-center mb-2">
@@ -50,12 +50,7 @@
                     return;
                   }
 
-                  if (fileImageProduct == "") {
-                    $('#message').show();
-                    $('#message').html('Bạn chưa nhập ảnh danh mục!');
-                    $('#fileImageProduct').focus();
-                    return;
-                  }
+
                   if (fileImageProduct != "") {
                     const urlImage = await upload("#fileImageProduct");
                     document.getElementById('url-image').value = urlImage;
