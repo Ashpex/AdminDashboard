@@ -11,7 +11,7 @@ const UserSchema = new Schema(
     password: String,
     name: String,
     address: String,
-    status: String,
+    status: boolean,
     idShoppingCart: { type: Schema.Types.ObjectId },
   },
   { collection: "user" }
