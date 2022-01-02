@@ -42,13 +42,6 @@ module.exports = {
     )(req, res, next);
   },
   logout: (req, res, next) => {
-    res.status(200).clearCookie("connect.sid", {
-      path: "/",
-      secure: false,
-      httpOnly: false,
-      domain: "http://localhost:3000",
-      sameSite: true,
-    });
     req.logOut();
     req.session.destroy(function (err) {
       res.redirect("/admin/login");
@@ -71,7 +64,7 @@ module.exports = {
 
     admin.save((err) => {
       if (err) return next(err);
-      res.redirect("/admin/list-admin/1");
+      res.redirect("/admin?page=1");
     });
   },
   profile: async (req, res, next) => {
@@ -139,7 +132,10 @@ module.exports = {
       return res.redirect("/admin/login");
     }
     let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
-    let page = req.params.page || 1; // trang hiện tại
+    let page = req.query.page || 1; // số page hiện tại
+    if (page < 1) {
+      page = 1;
+    }
 
     Admin.find() // find tất cả các data
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
@@ -171,7 +167,5 @@ module.exports = {
           });
         });
       });
-    // const admins = await Admin.find();
-    // return res.render("admin/list-admin", { admins });
   },
 };

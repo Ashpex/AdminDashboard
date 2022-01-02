@@ -17,7 +17,6 @@
               </div>
 
               <h2 class="text-uppercase text-center mb-3">Thêm sản phẩm</h2>
-              {{!-- enctype="multipart/form-data" --}}
               <form id="add-product-form" action="/product/add-product" method="POST">
 
                 {{!-- name --}}
@@ -83,12 +82,16 @@
                 <input type="hidden" name="category" id="selected-category" />
                 <input type="hidden" name="producer" id="selected-producer" />
 
-              </form>
+              </form>     
 
-              <div class="d-flex justify-content-center mb-2">
-                <button onclick="myFunction()" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                  style="color: white !important">Thêm sản phẩm</button>
+              <div class="d-grid gap-2">
+                  <button
+                    onclick="myFunction()"
+                    class="btn btn-primary btn-lg gradient-custom-4"
+                    type="button"
+                  >Thêm</button>
               </div>
+
               <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
               <script>
                 function myFunction() {

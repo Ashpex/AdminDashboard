@@ -6,7 +6,10 @@ const to_slug = require("../public/js/slug.js");
 module.exports = {
   showListProduct: (req, res) => {
     let perPage = 3; // số lượng sản phẩm xuất hiện trên 1 page
-    let page = req.params.page || 1;
+    let page = req.query.page || 1; // số page hiện tại
+    if (page < 1) {
+      page = 1;
+    }
 
     Product.find() // find tất cả các data
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
@@ -38,12 +41,6 @@ module.exports = {
           });
         });
       });
-    // Product.find({}, (err, product) => {
-    //   if (err) return next(err);
-    //   res.render("product/list-product", {
-    //     product,
-    //   });
-    // });
   },
   addProductGet: async (req, res) => {
     const category = await Category.find({});
@@ -106,7 +103,7 @@ module.exports = {
                   if (err) {
                     console.log(err);
                   } else {
-                    res.redirect("/product/list-product/1");
+                    res.redirect("/product?page=1");
                   }
                 }
               );
@@ -226,7 +223,7 @@ module.exports = {
                               if (err) {
                                 console.log(err);
                               } else {
-                                res.redirect("/product/list-product/1");
+                                res.redirect("/product?page=1");
                               }
                             }
                           ).clone();
@@ -278,7 +275,7 @@ module.exports = {
                 if (err) {
                   console.log(err);
                 } else {
-                  res.redirect("/product/list-product/1");
+                  res.redirect("/product?page=1");
                 }
               }
             ).clone();

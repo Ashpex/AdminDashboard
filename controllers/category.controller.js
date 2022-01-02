@@ -6,7 +6,10 @@ const to_slug = require("../public/js/slug.js");
 module.exports = {
   showListCategory: async (req, res) => {
     let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
-    let page = req.params.page || 1;
+    let page = req.query.page || 1; // số page hiện tại
+    if (page < 1) {
+      page = 1;
+    }
 
     Category.find() // find tất cả các data
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
@@ -66,7 +69,6 @@ module.exports = {
     const image = req.body.urlImage;
     const idCategory = to_slug(req.body.name) + "-" + Date.now();
     const category = await Category.findById(req.body.id);
-    console.log(category);
     const listIdProduct = category.listIdProduct;
     for await (let idProduct of listIdProduct) {
       let product = await Product.findById(idProduct);
@@ -87,7 +89,7 @@ module.exports = {
         if (err) {
           console.log(err);
         } else {
-          res.redirect("/category/list-category/1");
+          res.redirect("/category?page=1");
         }
       }
     );
@@ -102,7 +104,7 @@ module.exports = {
     }
 
     await Category.findByIdAndDelete(req.params.id);
-    res.redirect("/category/list-category/1");
+    res.redirect("/category?page=1");
   },
   addCategoryPost: (req, res) => {
     const category = new Category({
@@ -116,7 +118,7 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        res.redirect("/category/list-category/1");
+        res.redirect("/category?page=1");
       }
     });
   },

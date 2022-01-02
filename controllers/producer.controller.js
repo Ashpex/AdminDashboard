@@ -4,7 +4,10 @@ const Product = require("../models/product.model");
 module.exports = {
   showListProducer: async (req, res) => {
     let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
-    let page = req.params.page || 1;
+    let page = req.query.page || 1; // số page hiện tại
+    if (page < 1) {
+      page = 1;
+    }
 
     Producer.find() // find tất cả các data
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
@@ -69,7 +72,7 @@ module.exports = {
         if (err) {
           console.log(err);
         } else {
-          res.redirect("/producer/list-producer/1");
+          res.redirect("/producer?page=1");
         }
       }
     );
@@ -83,7 +86,7 @@ module.exports = {
     }
 
     await Producer.findByIdAndDelete(req.params.id);
-    res.redirect("/producer/list-producer/1");
+    res.redirect("/producer?page=1");
   },
   addProducerPost: async (req, res) => {
     const producer = new Producer({
@@ -91,6 +94,6 @@ module.exports = {
       listIdProduct: [],
     });
     await producer.save();
-    res.redirect("/producer/list-producer/1");
+    res.redirect("/producer?page=1");
   },
 };

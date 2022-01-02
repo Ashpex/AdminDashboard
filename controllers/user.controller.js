@@ -3,7 +3,10 @@ const User = require("../models/user.model");
 module.exports = {
   getAllUsers: (req, res, next) => {
     let perPage = 8; // số lượng sản phẩm xuất hiện trên 1 page
-    let page = req.params.page || 1;
+    let page = req.query.page || 1; // số page hiện tại
+    if (page < 1) {
+      page = 1;
+    }
 
     User.find() // find tất cả các data
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
@@ -47,7 +50,7 @@ module.exports = {
     });
     newUser.save((err) => {
       if (err) return next(err);
-      res.redirect("/account/list-account/1");
+      res.redirect("/account?page=1");
     });
   },
   editAccountGet: (req, res) => {
@@ -65,13 +68,12 @@ module.exports = {
         $set: {
           name: req.body.name,
           email: req.body.email,
-          password: req.body.phone,
           address: req.body.address,
         },
       },
       (err, account) => {
         if (err) return next(err);
-        res.redirect("/account/list-account/1");
+        res.redirect("/account?page=1");
       }
     );
   },
@@ -85,7 +87,7 @@ module.exports = {
       },
       (err, account) => {
         if (err) return next(err);
-        res.redirect("/account/list-account/1");
+        res.redirect("/account?page=1");
       }
     );
   },
@@ -99,14 +101,14 @@ module.exports = {
       },
       (err, account) => {
         if (err) return next(err);
-        res.redirect("/account/list-account/1");
+        res.redirect("/account?page=1");
       }
     );
   },
   deleteAccount: (req, res) => {
     User.findByIdAndDelete(req.params.id, (err, account) => {
       if (err) return next(err);
-      res.redirect("/account/list-account/1");
+      res.redirect("/account?page=1");
     });
   },
 };

@@ -10,8 +10,6 @@
               </div>
               <h2 class="text-uppercase text-center mb-3">Thêm danh mục</h2>
 
-
-
               <form id="add-category-form" method="POST" action="/category/add-category">
                 <div class="form-outline mb-2">
                   <label class="form-label" for="form3Example1cg">Tên danh mục</label>
@@ -23,9 +21,12 @@
                   <input name="image" type="file" id="fileImageProduct" class="form-control form-control-lg" required />
                 </div>
 
-                <div class="d-flex justify-content-center mt-5">
-                  <button onclick="myFunction()" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"
-                    style="color: white !important">Thêm danh mục</button>
+                <div class="d-grid gap-2">
+                  <button
+                    onclick="myFunction()"
+                    class="btn btn-primary btn-lg gradient-custom-4"
+                    type="button"
+                  >Thêm</button>
                 </div>
 
                 <input type="hidden" name="urlImage" id="url-image" />
@@ -54,9 +55,7 @@
                     $('#fileImageProduct').focus();
                     return;
                   }
-
-
-
+                  
                   const urlImage = await upload("#fileImageProduct");
                   document.getElementById('url-image').value = urlImage;
                   document.getElementById('add-category-form').submit();

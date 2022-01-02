@@ -4,7 +4,7 @@ const router = express.Router();
 const ProducerController = require("../controllers/producer.controller");
 
 // show list of producers
-router.get("/list-producer/:page", ProducerController.showListProducer);
+router.get("/", ProducerController.showListProducer);
 
 // edit producer
 router.get("/edit-producer/:id", ProducerController.editProducerGet);
