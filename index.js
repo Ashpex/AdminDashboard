@@ -6,7 +6,11 @@ const Handlebars = require("handlebars");
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
+const databaseService = require("./services/database.service");
+const helpers = require("./helpers/viewEngine.js");
 const env = require("dotenv").config();
+
+databaseService.connectDatabase();
 
 const app = express();
 
@@ -16,37 +20,7 @@ app.engine(
     extname: ".hbs",
     defaultLayout: "main",
     handlebars: allowInsecurePrototypeAccess(Handlebars),
-    helpers: {
-      ifCond: function (v1, operator, v2, options) {
-        switch (operator) {
-          case "==":
-            return v1 == v2 ? options.fn(this) : options.inverse(this);
-          case "===":
-            return v1 === v2 ? options.fn(this) : options.inverse(this);
-          case "!=":
-            return v1 != v2 ? options.fn(this) : options.inverse(this);
-          case "!==":
-            return v1 !== v2 ? options.fn(this) : options.inverse(this);
-          case "<":
-            return v1 < v2 ? options.fn(this) : options.inverse(this);
-          case "<=":
-            return v1 <= v2 ? options.fn(this) : options.inverse(this);
-          case ">":
-            return v1 > v2 ? options.fn(this) : options.inverse(this);
-          case ">=":
-            return v1 >= v2 ? options.fn(this) : options.inverse(this);
-          case "&&":
-            return v1 && v2 ? options.fn(this) : options.inverse(this);
-          case "||":
-            return v1 || v2 ? options.fn(this) : options.inverse(this);
-          default:
-            return options.inverse(this);
-        }
-      },
-      json: function (context) {
-        return JSON.stringify(context);
-      },
-    },
+    helpers: helpers,
   })
 );
 app.set("view engine", "hbs");
@@ -60,15 +34,6 @@ app.use(express.static(path.join(__dirname, "/public")));
 require("./middlewares/session")(app);
 require("./middlewares/passport")(app);
 app.use(require("./middlewares/locals"));
-
-// app.use(function (req, res, next) {
-//   if (!req.user)
-//     res.set(
-//       "Cache-Control",
-//       "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
-//     );
-//   next();
-// });
 
 app.use("/admin", require("./routes/admin.route"));
 
