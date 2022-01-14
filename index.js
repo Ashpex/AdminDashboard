@@ -10,6 +10,16 @@ const databaseService = require("./services/database.service");
 const helpers = require("./helpers/viewEngine.js");
 const env = require("dotenv").config();
 
+const AdminRoute = require("./routes/admin.route");
+const AccountRoute = require("./routes/account.route");
+const ProductRoute = require("./routes/product.route");
+const CategoryRoute = require("./routes/category.route");
+const ProducerRoute = require("./routes/producer.route");
+const RevenueRouter = require("./routes/revenue.route");
+const SessionMiddleware = require("./middlewares/session");
+const PassportMiddleware = require("./middlewares/passport");
+const LocalsMiddleware = require("./middlewares/locals");
+
 databaseService.connectDatabase();
 
 const app = express();
@@ -31,28 +41,29 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-require("./middlewares/session")(app);
-require("./middlewares/passport")(app);
-app.use(require("./middlewares/locals"));
+// SessionMiddleware(app);
+// PassportMiddleware(app);
+// app.use(LocalsMiddleware);
 
-app.use("/admin", require("./routes/admin.route"));
+// app.use("/admin", AdminRoute);
 
-app.use((req, res, next) => {
-  if (!req.user) {
-    res.redirect("/admin/login");
-  } else {
-    next();
-  }
-});
+// app.use((req, res, next) => {
+//   if (!req.user) {
+//     res.redirect("/admin/login");
+//   } else {
+//     next();
+//   }
+// });
 
 app.get("/", function (req, res) {
   res.render("home");
 });
 
-app.use("/account", require("./routes/account.route"));
-app.use("/product", require("./routes/product.route"));
-app.use("/category", require("./routes/category.route"));
-app.use("/producer", require("./routes/producer.route"));
+app.use("/account", AccountRoute);
+app.use("/product", ProductRoute);
+app.use("/category", CategoryRoute);
+app.use("/producer", ProducerRoute);
+app.use("/revenue", RevenueRouter);
 
 app.use((req, res) => {
   res.render("errors/404", { layout: false });

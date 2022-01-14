@@ -1,0 +1,45 @@
+<div id="container" style="width: 80%; height: 80%"></div>
+
+<input type="hidden" id="total-room-revenue" value="{{totalRoomRevenue}}">
+<input type="hidden" id="total-service-revenue" value="{{totalServiceRevenue}}">
+
+
+
+{{#section "script_revenue_chart"}}
+  	<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-base.min.js"></script>
+{{/section}}
+
+{{#section "js_revenue_chart"}}
+	<script>
+		anychart.onDocumentReady(function () {
+			// create data
+			const data = [
+			["John", 10000],
+			["Jake", 12000],
+			["Peter", 13000],
+			["James", 10000],
+			["Mary", 9000]
+			];
+
+			// create a chart
+			var chart = anychart.column();
+
+			// create a column series and set the data
+			var series = chart.column(data);
+
+			// set the chart title
+			chart.title("Doanh thu");
+
+			// set the titles of the axes
+			//chart.xAxis().title("Tháng");
+			chart.yAxis().title("Sales, $");
+
+			// set the container id
+			chart.container("container");
+
+			// initiate drawing the chart
+			chart.draw();
+		}); 
+	
+	</script>  
+{{/section}}

@@ -9,6 +9,10 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Admin</title>
+
+	{{{_sections.script_revenue_chart}}}
+    {{{_sections.css_chart}}}
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -155,6 +159,15 @@
                   ></i></div>
                 Xem danh sách
               </a>
+
+				<div class="sb-sidenav-menu-heading">Thống kê</div>
+              	<a class="nav-link" href="/revenue">
+					<div class="sb-nav-link-icon"><i
+						class="fas fa-list-ul"
+					></i></div>
+					Doanh thu
+             	 </a>
+
             </div>
           </div>
 
@@ -172,6 +185,7 @@
       crossorigin="anonymous"
     ></script>
 
+	{{{_sections.js_revenue_chart}}}
     <script src="/js/scripts.js"></script>
     <script src="/js/search.js"></script>
   </body>
