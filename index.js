@@ -19,6 +19,7 @@ const RevenueRouter = require("./routes/revenue.route");
 const SessionMiddleware = require("./middlewares/session");
 const PassportMiddleware = require("./middlewares/passport");
 const LocalsMiddleware = require("./middlewares/locals");
+const AuthMiddleware = require("./middlewares/auth");
 
 databaseService.connectDatabase();
 
@@ -41,29 +42,33 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-// SessionMiddleware(app);
-// PassportMiddleware(app);
-// app.use(LocalsMiddleware);
+SessionMiddleware(app);
+PassportMiddleware(app);
+app.use(LocalsMiddleware);
 
 // app.use("/admin", AdminRoute);
 
 // app.use((req, res, next) => {
 //   if (!req.user) {
-//     res.redirect("/admin/login");
+//     // res.redirect("/admin/login");
+//     return res.render("admin/login", {
+//       layout: false,
+//     });
 //   } else {
 //     next();
 //   }
 // });
 
-app.get("/", function (req, res) {
+app.get("/", AuthMiddleware, function (req, res) {
   res.render("home");
 });
 
-app.use("/account", AccountRoute);
-app.use("/product", ProductRoute);
-app.use("/category", CategoryRoute);
-app.use("/producer", ProducerRoute);
-app.use("/revenue", RevenueRouter);
+app.use("/admin", AdminRoute);
+app.use("/account", AuthMiddleware, AccountRoute);
+app.use("/product", AuthMiddleware, ProductRoute);
+app.use("/category", AuthMiddleware, CategoryRoute);
+app.use("/producer", AuthMiddleware, ProducerRoute);
+app.use("/revenue", AuthMiddleware, RevenueRouter);
 
 app.use((req, res) => {
   res.render("errors/404", { layout: false });

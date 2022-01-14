@@ -1,6 +1,7 @@
 const Admin = require("../models/admin.model");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
+const AuthMiddleware = require("../middlewares/auth");
 
 module.exports = {
   getLogin: (req, res, next) => {
