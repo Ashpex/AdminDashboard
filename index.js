@@ -16,6 +16,7 @@ const ProductRoute = require("./routes/product.route");
 const CategoryRoute = require("./routes/category.route");
 const ProducerRoute = require("./routes/producer.route");
 const RevenueRouter = require("./routes/revenue.route");
+const OrdersRoute = require("./routes/orders.route");
 const SessionMiddleware = require("./middlewares/session");
 const PassportMiddleware = require("./middlewares/passport");
 const LocalsMiddleware = require("./middlewares/locals");
@@ -58,12 +59,13 @@ app.use(LocalsMiddleware);
 //     next();
 //   }
 // });
-
-app.get("/", AuthMiddleware, function (req, res) {
+app.use("/orders", OrdersRoute);
+app.get("/", function (req, res) {
   res.render("home");
 });
 
 app.use("/admin", AdminRoute);
+
 app.use("/account", AuthMiddleware, AccountRoute);
 app.use("/product", AuthMiddleware, ProductRoute);
 app.use("/category", AuthMiddleware, CategoryRoute);
