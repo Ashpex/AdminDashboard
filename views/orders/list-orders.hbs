@@ -23,7 +23,7 @@
           <th>Địa chỉ</th>
           <th>Giỏ hàng</th>
           <th>Tổng tiền</th>
-          <th>Thời gian</th>
+          <th>Thời gian đặt</th>
           <th>Trạng thái</th>
           <th>Điều chỉnh</th>
         </tr>
@@ -55,7 +55,7 @@
                         {{/each}}
               </div>
             </td>
-            <td>{{this.total}}</td>
+            <td class="total total-{{@index}}">{{this.total}}</td>
             <td>{{this.time}}</td>
             <td>
                     {{#ifCond this.status "==" "Pending"}}
@@ -127,3 +127,18 @@
     </nav>
   </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+	var formatter = new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'VND',
+	});
+	let total = $('.total');
+	console.log(total.length);
+	for (let i = 0; i < total.length; i++) {
+		let value = $(`.total-${i}`).html();
+		value = formatter.format(value);
+		$(`.total-${i}`).text(value);
+	}
+</script>

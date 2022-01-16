@@ -4,7 +4,7 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const Handlebars = require("handlebars");
 const {
-  allowInsecurePrototypeAccess,
+    allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
 const databaseService = require("./services/database.service");
 const helpers = require("./helpers/viewEngine.js");
@@ -28,13 +28,13 @@ databaseService.connectDatabase();
 const app = express();
 
 app.engine(
-  "hbs",
-  exphbs({
-    extname: ".hbs",
-    defaultLayout: "main",
-    handlebars: allowInsecurePrototypeAccess(Handlebars),
-    helpers: helpers,
-  })
+    "hbs",
+    exphbs({
+        extname: ".hbs",
+        defaultLayout: "main",
+        handlebars: allowInsecurePrototypeAccess(Handlebars),
+        helpers: helpers,
+    })
 );
 app.set("view engine", "hbs");
 
@@ -60,28 +60,30 @@ app.use(LocalsMiddleware);
 //     next();
 //   }
 // });
-app.use("/orders", OrdersRoute);
+
 app.get("/", function (req, res) {
-  res.render("home");
+    res.render("home");
 });
-app.use("/revenue", RevenueRouter);
+
 app.use("/admin", AdminRoute);
-app.use("/api/chart", ApiChartRoute);
 
 app.use("/account", AuthMiddleware, AccountRoute);
 app.use("/product", AuthMiddleware, ProductRoute);
 app.use("/category", AuthMiddleware, CategoryRoute);
 app.use("/producer", AuthMiddleware, ProducerRoute);
+app.use("/orders", AuthMiddleware, OrdersRoute);
+app.use("/revenue", AuthMiddleware, RevenueRouter);
+app.use("/api/chart", AuthMiddleware, ApiChartRoute);
 
 app.use((req, res) => {
-  res.render("errors/404", { layout: false });
+    res.render("errors/404", { layout: false });
 });
 
 app.use((err, req, res, next) => {
-  console.log(err.message);
-  res.status(500).render("errors/500", { layout: false, error: err.message });
+    console.log(err.message);
+    res.status(500).render("errors/500", { layout: false, error: err.message });
 });
 
 app.listen(process.env.PORT || 3000, () => {
-  console.log("App listening on port 3000");
+    console.log("App listening on port 3000");
 });

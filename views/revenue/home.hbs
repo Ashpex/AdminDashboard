@@ -30,6 +30,7 @@
 
 <div id="container" class="d-flex" style="width: 80%; height: 80%"></div>
 
+
 <div id="alert" class="alert alert-primary text-center" role="alert">
   Vui lòng chờ tải dữ liệu
 </div>
@@ -52,7 +53,7 @@
         ['Tháng 5', '15'],
         ['Tháng 6', '10']
       ]);
-		//console.log(dataSet.oc[0][0]);
+		
 		function drawChart() {
 			var chart = anychart.line();
 
@@ -134,14 +135,16 @@
 				success: function(data){
 					console.log(data);
 					if (data.length > 1){
-						for (var i = 0; i < data.length; i++) {
+						let total = 0;						
+						for (let i = 0;i < data.length; i++) {
 							changeDataset(data[i].year, data[i].total, i);
+							total += data[i].total;
 						}
+						dataSet.oc.push(['Tổng', total]);
 					} else {
 						dataSet.oc = [[],[]];
 						changeDataset(data.year, data.total, 0);
 					}
-					//changeDataset(data.year, data.total);
 					$('#container').empty();
 					anychart.onDocumentReady(drawChart);
 					$('#alert').hide();

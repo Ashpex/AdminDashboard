@@ -8,11 +8,12 @@ module.exports = {
         const filter = req.query.filter;
 
         console.log(year, filter);
-        const listOrder = await CheckOut.find({});
+        const listOrder = await CheckOut.find({ status: "Delivered" });
 
         let total = 0;
         if (year == "All") {
             const years = req.query.years;
+            console.log(years);
             const listYears = years.split(",");
             listYears.sort();
             const data = [];
@@ -24,30 +25,6 @@ module.exports = {
                 });
             }
             res.status(200).json(data);
-
-            // for (let i = 0; i < listOrder.length; i++) {
-            //     const shoppingCart = await ShoppingCart.find({
-            //         _id: listOrder[i].idShoppingCart,
-            //     });
-            //     if (shoppingCart.length != 0) {
-            //         let sum = 0;
-            //         for (
-            //             let j = 0;
-            //             j < shoppingCart[0].listProductOrder.length;
-            //             j++
-            //         ) {
-            //             const productOrder = await ProductOrder.findById(
-            //                 shoppingCart[0].listProductOrder[j]
-            //             );
-            //             sum += productOrder.unitPrice * productOrder.quantity;
-            //         }
-            //         total += sum;
-            //     }
-            // }
-            // res.status(200).json({
-            //     year,
-            //     total,
-            // });
         } else {
             const total = await filterByYear(year, listOrder);
             res.status(200).json({
