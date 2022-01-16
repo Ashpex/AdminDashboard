@@ -17,6 +17,7 @@ const CategoryRoute = require("./routes/category.route");
 const ProducerRoute = require("./routes/producer.route");
 const RevenueRouter = require("./routes/revenue.route");
 const OrdersRoute = require("./routes/orders.route");
+const ApiChartRoute = require("./api/chart/apiChart.route");
 const SessionMiddleware = require("./middlewares/session");
 const PassportMiddleware = require("./middlewares/passport");
 const LocalsMiddleware = require("./middlewares/locals");
@@ -63,14 +64,14 @@ app.use("/orders", OrdersRoute);
 app.get("/", function (req, res) {
   res.render("home");
 });
-
+app.use("/revenue", RevenueRouter);
 app.use("/admin", AdminRoute);
+app.use("/api/chart", ApiChartRoute);
 
 app.use("/account", AuthMiddleware, AccountRoute);
 app.use("/product", AuthMiddleware, ProductRoute);
 app.use("/category", AuthMiddleware, CategoryRoute);
 app.use("/producer", AuthMiddleware, ProducerRoute);
-app.use("/revenue", AuthMiddleware, RevenueRouter);
 
 app.use((req, res) => {
   res.render("errors/404", { layout: false });
