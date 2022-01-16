@@ -3,7 +3,7 @@
     <div class="col-12 col-md-6 col-xl-4 mb-3">
       <div class="p-1 bg-light rounded rounded-pill shadow-lg d-flex justify-content-end">
         <div class="input-group">
-          <input id="myInput" type="search" onkeyup="mySearchFunction()" placeholder="Nhập email bạn cần tìm?" aria-describedby="btn-search" class="form-control border-0 bg-light">
+          <input id="myInput" type="search" onkeyup="mySearchFunction()" placeholder="Nhập họ tên khách bạn cần tìm?" aria-describedby="btn-search" class="form-control border-0 bg-light">
           <div class="input-group-append">
             <button id="btn-search" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
           </div>
@@ -23,6 +23,7 @@
           <th>Địa chỉ</th>
           <th>Giỏ hàng</th>
           <th>Tổng tiền</th>
+          <th>Thời gian</th>
           <th>Trạng thái</th>
           <th>Điều chỉnh</th>
         </tr>
@@ -47,62 +48,49 @@
                                                 </div>
 
                                         </div>
-                                                <div class="d-flex">
-                                                        <p class="mb-0">Số lượng: {{this.quantity}}</p>
-                                                 </div>
-                                        {{!-- </div> --}}
+                                        <div class="d-flex">
+                                                <p class="mb-0">Số lượng: {{this.quantity}}</p>
+                                        </div>
                                 </div>
                         {{/each}}
               </div>
             </td>
             <td>{{this.total}}</td>
-            <td>{{this.status}}</td>
+            <td>{{this.time}}</td>
+            <td>
+                    {{#ifCond this.status "==" "Pending"}}
+                            <span>Đang xử lý</span>                    
+                    {{/ifCond}}
+                    {{#ifCond this.status "==" "Delivering"}}
+                            <span>Đang giao hàng</span>                    
+                    {{/ifCond}}
+                    {{#ifCond this.status "==" "Delivered"}}
+                            <span>Đã giao hàng</span>                    
+                    {{/ifCond}}
+                    {{#ifCond this.status "==" "Canceled"}}
+                            <span>Đã hủy</span>                    
+                    {{/ifCond}}
+
+            </td>
+            
             <td>
               <div class="row">
-                <div class="col-3">
-                  <a href="/account/edit-account/{{_id}}">
-                    <i class="far fa-edit" title="Chỉnh sửa tài khoản"></i>
-                  </a>
-                </div>
+                {{#ifCond this.status "==" "Pending"}}
+                        <div class="col-6 text-center">                                
+                                <a onclick="return confirm('Bạn có muốn chấp nhận đơn hàng không')" 
+                                   href="/orders/accept-orders/{{_id}}">
+                                        <i class="fas fa-check" title="Chấp nhận đơn hàng" style="color: green;">                                             
+                                        </i>                                        
+                                </a>                                
+                        </div>
 
-                <div class="col-3">
-                  {{#ifCond this.status "==" true}}
-                    <a
-                      href="/account/block-account/{{_id}}"
-                      onclick="return confirm('Bạn có muốn khóa tài khoản không')"
-                    >
-                      <i
-                        class="fas fa-user-lock"
-                        style="color: red;"
-                        title="Khóa tài khoản"
-                      ></i>
-                    </a>
-                  {{else}}
-                    <a
-                      href="/account/unblock-account/{{_id}}"
-                      onclick="return confirm('Bạn có muốn mở khóa tài khoản không')"
-                    >
-                      <i
-                        class="fas fa-check"
-                        style="color: green"
-                        title="Mở khóa tài khoản"
-                      ></i>
-                    </a>
-                  {{/ifCond}}
-                </div>
-
-                <div class="col-3">
-                  <a
-                    href="/account/delete-account/{{_id}}"
-                    onclick="return confirm('Bạn có muốn xóa tài khoản không')"
-                  >
-                    <i
-                      class="fas fa-trash"
-                      style="color: red"
-                      title="Xóa tài khoản"
-                    ></i>
-                  </a>
-                </div>
+                        <div class="col-6 text-center">
+                                <a onclick="return confirm('Bạn có muốn hủy đơn hàng không')" 
+                                   href="/orders/cancel-orders/{{_id}}">
+                                        <i class="fas fa-ban" title="Hủy đơn hàng" style="color: red;"></i>
+                                </a>
+                        </div>
+                {{/ifCond}}
               </div>
             </td>
           </tr>

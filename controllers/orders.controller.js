@@ -24,6 +24,7 @@ module.exports = {
         listOrder[i].idShoppingCart
       );
       let sum = 0;
+      listOrder[i].time = shoppingCart.purchasedTime;
       listOrder[i].listProductOrder = [];
       for (let j = 0; j < shoppingCart.listProductOrder.length; j++) {
         const productOrder = await ProductOrder.findById(
@@ -57,5 +58,19 @@ module.exports = {
       nextPage: +page + 1,
       previousPage: +page - 1,
     });
+  },
+  acceptOrder: async (req, res) => {
+    const id = req.params.id;
+    const order = await CheckOut.findById(id);
+    order.status = "Delivering";
+    await order.save();
+    res.redirect("/orders?page=1");
+  },
+  cancelOrder: async (req, res) => {
+    const id = req.params.id;
+    const order = await CheckOut.findById(id);
+    order.status = "Canceled";
+    await order.save();
+    res.redirect("/orders?page=1");
   },
 };
