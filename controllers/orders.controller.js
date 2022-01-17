@@ -66,18 +66,22 @@ module.exports = {
         order.status = "Delivering";
         await order.save();
 
-        const shoppingCart = await ShoppingCart.findById(order.idShoppingCart);
+        // const shoppingCart = await ShoppingCart.findById(order.idShoppingCart);
 
-        for (let i = 0; i < shoppingCart.listProductOrder.length; i++) {
-            const productOrder = await ProductOrder.findById(
-                shoppingCart.listProductOrder[i]
-            );
-            const product = await Product.find({
-                idProduct: productOrder.idProduct,
-            });
-            product[0].quantity -= productOrder.quantity;
-            await product[0].save();
-        }
+        // for (let i = 0; i < shoppingCart.listProductOrder.length; i++) {
+        //     const productOrder = await ProductOrder.findById(
+        //         shoppingCart.listProductOrder[i]
+        //     );
+        //     const product = await Product.find({
+        //         idProduct: productOrder.idProduct,
+        //     });
+        //     //console.log(product[0].quantity);
+        //     console.log(product[0]);
+        //     console.log(productOrder);
+        //     //console.log(productOrder.quantity);
+        //     //product[0].quantity -= productOrder.quantity;
+        //     //await product[0].save();
+        // }
 
         res.redirect("/orders?page=1");
     },
