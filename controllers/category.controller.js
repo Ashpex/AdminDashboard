@@ -6,7 +6,10 @@ const to_slug = require("../public/js/slug.js");
 module.exports = {
   showListCategory: async (req, res) => {
     let perPage = 2; // số lượng sản phẩm xuất hiện trên 1 page
-    let page = req.params.page || 1;
+    let page = req.query.page || 1; // số page hiện tại
+    if (page < 1) {
+      page = 1;
+    }
 
     Category.find() // find tất cả các data
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
@@ -61,18 +64,32 @@ module.exports = {
       }
     });
   },
-  editCategoryPost: (req, res) => {
+  editCategoryPost: async (req, res) => {
+    const name = req.body.name;
+    const image = req.body.urlImage;
+    const idCategory = to_slug(req.body.name) + "-" + Date.now();
+    const category = await Category.findById(req.body.id);
+    const listIdProduct = category.listIdProduct;
+    for await (let idProduct of listIdProduct) {
+      let product = await Product.findById(idProduct);
+      console.log(product);
+      let url = idCategory + "/" + product.idProduct;
+      await Product.findByIdAndUpdate(idProduct, {
+        url: url,
+      });
+    }
     Category.findByIdAndUpdate(
       req.body.id,
       {
         name: req.body.name,
-        idCategory: to_slug(req.body.name) + "-" + Date.now(),
+        image: req.body.urlImage,
+        idCategory: idCategory,
       },
       (err, category) => {
         if (err) {
           console.log(err);
         } else {
-          res.redirect("/category/list-category/1");
+          res.redirect("/category?page=1");
         }
       }
     );
@@ -87,12 +104,13 @@ module.exports = {
     }
 
     await Category.findByIdAndDelete(req.params.id);
-    res.redirect("/category/list-category/1");
+    res.redirect("/category?page=1");
   },
   addCategoryPost: (req, res) => {
     const category = new Category({
       name: req.body.name,
       idCategory: to_slug(req.body.name) + "-" + Date.now(),
+      image: req.body.urlImage,
       listIdProduct: [],
     });
 
@@ -100,7 +118,7 @@ module.exports = {
       if (err) {
         console.log(err);
       } else {
-        res.redirect("/category/list-category/1");
+        res.redirect("/category?page=1");
       }
     });
   },

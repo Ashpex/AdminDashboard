@@ -31,6 +31,6 @@ router.get("/change-password", AdminController.getChangePassword);
 router.post("/change-password", AdminController.postChangePassword);
 
 // show all admin
-router.get("/list-admin/:page", AdminController.showAllAdmin);
+router.get("/", AdminController.showAllAdmin);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const router = express.Router();
 const CategoryController = require("../controllers/category.controller");
 
 // show list category and product in this category
-router.get("/list-category/:page", CategoryController.showListCategory);
+router.get("/", CategoryController.showListCategory);
 
 // edit category
 router.get("/edit-category/:id", CategoryController.editCategoryGet);

@@ -1,11 +1,23 @@
-function upload() {
+async function upload(str) {
   const ref = firebase.storage().ref();
-  const file = document.querySelector("#fileImageProduct").files[0];
-  const metaData = {
+  let urlImage = [];
+  var inputs = document.querySelector(str).files;
+  console.log(inputs.length);
+  for (let i = 0; i < inputs.length; i++) {
+    //deal with each input
+    let file = inputs[i];
+    let token = await uploadOneImage(file, ref);
+    urlImage.push(token);
+  }
+  return urlImage;
+}
+
+function uploadOneImage(file, ref) {
+  let metaData = {
     contentType: file.type,
   };
-  const name = file.name;
-  const uploadImage = ref.child(name).put(file, metaData);
+  let name = file.name;
+  let uploadImage = ref.child(name).put(file, metaData);
 
   let urlImage = "";
 

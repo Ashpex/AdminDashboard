@@ -9,32 +9,59 @@
           <div class="card mt-4" style="border-radius: 15px;">
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-3">Tạo tài khoản</h2>
-{{!-- action="/account/add-account" --}}
               <form method="POST" action="/account/add-account">
                 <div class="form-outline mb-2">
-                  <label  class="form-label" for="form3Example1cg">Email</label>
-                  <input name="email" type="email" id="form3Example1cg" class="form-control form-control-lg" required />                  
+                  <label class="form-label" for="form3Example1cg">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    id="form3Example1cg"
+                    class="form-control form-control-lg"
+                    required
+                  />
                 </div>
 
                 <div class="form-outline mb-2">
                   <label class="form-label" for="form3Example3cg">Họ tên</label>
-                  <input name="name" type="text" id="form3Example3cg" class="form-control form-control-lg" required/>
+                  <input
+                    name="name"
+                    type="text"
+                    id="form3Example3cg"
+                    class="form-control form-control-lg"
+                    required
+                  />
                 </div>
 
                 <div class="form-outline mb-2">
                   <label class="form-label" for="form3Example4cg">Mật khẩu</label>
-                  <input name="password" type="password" id="form3Example4cg" class="form-control form-control-lg" required/>
+                  <input
+                    name="password"
+                    type="password"
+                    id="form3Example4cg"
+                    class="form-control form-control-lg"
+                    required
+                  />
                 </div>
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form3Example4cdg">Địa chỉ</label>
-                  <input name="address" type="text" id="form3Example4cdg" class="form-control form-control-lg" required/>
+                  <input
+                    name="address"
+                    type="text"
+                    id="form3Example4cdg"
+                    class="form-control form-control-lg"
+                    required
+                  />
                 </div>
 
-                <div class="d-flex justify-content-center mb-2">
-                  <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" style="color: white !important">Tạo tài khoản</button>
+                <div class="d-grid gap-2">
+                  <button
+                    type="submit"
+                    class="btn btn-primary btn-lg gradient-custom-4"
+                    type="button"
+                  >Thêm</button>
                 </div>
-                
+
               </form>
 
             </div>
